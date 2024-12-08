@@ -58,13 +58,11 @@
 			<div class="navbar">
 				<nav>
 					<ul>
-						<li><a href="#"></a>Scrol</li>
 						<li><a href="#"></a>Recent</li>
+						<li><a href="#"></a>Scroll</li>
 						<li><a href="#"></a>Photos</li>
-						<li><a href="#"></a>Signature</li>
+						<li><a href="#"></a>For You</li>
 						<li><a href="#"></a>Shared</li>
-						<li><a href="#"></a>File request</li>
-						<li><a href="#"></a>Deleted files</li>
 					</ul>
 				</nav>
 			</div>
@@ -74,6 +72,19 @@
 						<div class="newsp"><img src="{{ asset('assest\Biznest.png') }}" alt="Profile Picture" class="newspp"></div>
 						<div class="newsd">
 							<div class="md">Amozon</div>
+							<div class="sd">Sponsered</div>
+						</div>
+					</div>
+				</div>
+				<div class="rtext">this is to inform that it is so many sales acording to this site</div>
+				<div class="ad"></div>
+			</div>
+            <div class="related">
+				<div class="relatedN">
+					<div class="descrip">
+						<div class="newsp"><img src="{{ asset('assest\Biznest.png') }}" alt="Profile Picture" class="newspp"></div>
+						<div class="newsd">
+							<div class="md">Amazon</div>
 							<div class="sd">Sponsered</div>
 						</div>
 					</div>

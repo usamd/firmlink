@@ -189,7 +189,7 @@
             </div>
             <div class="card"
             <div class="d-grid">
-                <h6 class="card-title text-center mb-4">{{ __('Would you like to start a business?') }}</h6>
+                <h6 class="card-title text-center mb-4">{{ __('Are you finding something for a business?') }}</h6>
                 <a href="/cusmenu" class="btn btn-custom btn-lg fw-bold ">Customer Account</a>
             </div>
             </div>

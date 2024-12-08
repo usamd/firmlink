@@ -70,7 +70,7 @@ body{
 	margin-top: 100px;
 	padding-left: 5px;
 	display: flex;
-	
+
 
 }
 
@@ -87,20 +87,20 @@ body{
 }
 
 .pid .id .sidebar-profile-picture {
-    width: 40px; 
-    height: 40px; 
-    border-radius: 50%; 
-    border: 2px solid #ffffff; 
-    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1); 
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 2px solid #ffffff;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
     object-fit: cover
 }
 .sidebar-profile-picture {
   display: flex;
-  justify-content: center; 
-  align-items: center; 
-  padding: 0px; 
-  background-color: #e0e0e0; 
-  border-radius: 50%; 
+  justify-content: center;
+  align-items: center;
+  padding: 0px;
+  background-color: #e0e0e0;
+  border-radius: 50%;
 }
 
 
@@ -118,7 +118,7 @@ body{
 	padding: 10px;
 	padding-bottom: 10px;
 	padding-top: 5px;
-	
+
 
 
 }
@@ -133,7 +133,7 @@ body{
 .search{
 	display: flex;
 	position: relative;
-	
+
 }
 
 
@@ -148,7 +148,7 @@ body{
     border-radius: 30px;
     font-size: 18px;
     padding: 10px;
-    
+
 	}
 
 .search input:hover{
@@ -182,7 +182,7 @@ body{
 	font-size: 18px;
 	border-radius: 50px;
 	margin-left: 200px;
-	
+
 }
 .search .coin2 button{
 	background: #00B132;
@@ -192,7 +192,7 @@ body{
 	font-size: 18px;
 	border-radius: 50px;
 	margin-left: 50px;
-	
+
 }
 .search .coin3 button{
 	background: #00B132;
@@ -202,7 +202,7 @@ body{
 	font-size: 18px;
 	border-radius: 50px;
 	margin-left: 50px;
-	
+
 }
 
 .explore-table{
@@ -245,8 +245,8 @@ body{
 	margin-left: 600px;
 	background: #232E38;
 	border-radius: 30px;
-	
-	
+
+
 }
 .profile-picture-container {
 	height: 100px;
@@ -256,26 +256,26 @@ body{
 	margin-left: 180px;
 	padding-top: 50px;
 
-	
+
 
 }
 
 .profile-picture {
-  width: 100px; 
-  height: 100px; 
-  border-radius: 50%; 
-  border: 2px solid #ffffff; 
-  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1); 
-  object-fit: cover; 
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  border: 2px solid #ffffff;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+  object-fit: cover;
 }
 
 .profile-picture-container {
   display: flex;
-  justify-content: center; 
-  align-items: center; 
-  padding: 0px; 
-  background-color: #e0e0e0; 
-  border-radius: 50%; 
+  justify-content: center;
+  align-items: center;
+  padding: 0px;
+  background-color: #e0e0e0;
+  border-radius: 50%;
 }
 .profile-details {
 	text-align: center;
@@ -330,17 +330,17 @@ body{
 }
 .notifications .news .information .data{
 	width: 700px;
-	
+
 }
 .notifications .news .information .data .descrip{
 	display: flex;
 }
  .notifications .news .information .data .descrip .newspp {
-    width: 40px; 
-    height: 40px; 
-    border-radius: 50%; 
-    border: 2px solid green; 
-    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1); 
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 2px solid green;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
     object-fit: cover
 }
 .notifications .news .information .data .descrip .newsd{
@@ -404,7 +404,7 @@ body{
 	font-size: 12px;
 	font-style: italic;
 	border-bottom: 1px solid grey;
-	width: 450px; 
+	width: 450px;
 }
 .notifications .shedule .notetable .tdt{
 	padding-right: 50px;
@@ -420,7 +420,7 @@ body{
 	margin-top: 80px;
 	height: 40px;
 	width: 600px;
-	
+
 }
 .newsfeed .wall .msearch input{
 	background: #15202B;
@@ -467,13 +467,13 @@ body{
 	padding-top: 50px;
 }
 .newsfeed  .wall .related .relatedN .descrip .newspp{
-	width: 40px; 
-    height: 40px; 
-    border-radius: 50%; 
-    border: 2px solid green; 
-    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1); 
-    object-fit: cover:;
-    
+	width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 2px solid green;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+    object-fit: cover;
+
 }
 .newsfeed  .wall .related .relatedN .descrip .newsd{
     margin-left: 10px;
@@ -548,7 +548,7 @@ body{
 .navbarp{
 	margin-left: 600px;
 	margin-top: 70px;
-	
+
 }
 .navbarp nav ul li{
 	display: initial;
@@ -576,36 +576,35 @@ body{
 	border-radius: 50%;
 	background: red;
 	border: solid white 4px;
-	box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1); 
-    object-fit: cover:;
-	
+	box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+    object-fit: cover;
 }
 .prod{
 	margin-left: 315px;
 	margin-top: 50px;
 	width: 900px;
 	text-align: center;
-	
+
 }
 .prod .proname{
 	font-size: 50px;
 	color: #ffffff;
-	
+
 }
 .prod .prodetail1{
 	color: #ffffff;
 	font-size: 20px;
-	
+
 }
 .prod .prodetail2{
 	color: #ffffff;
 	font-size: 25px;
-	
+
 }
 .pro .prod .protable{
 	padding-top: 40px;
 	padding-left: 250px;
-	
+
 }
 .pro .prod .protable th{
 	padding-left: 40px;
