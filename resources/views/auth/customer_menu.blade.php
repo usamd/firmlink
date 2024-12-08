@@ -162,8 +162,8 @@
     <div class="container">
         <div class="left-column">
             <img src="/assest/ChatBG.png" alt="Logo" class="logo">
-            <div class="business-info">Business Account</div>
-            <div class="partnership">Partnership for business growth</div>
+            <div class="business-info">Customer Account</div>
+            <div class="partnership">Ready to Start</div>
             <div class="partnership-desc">
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
             </div>
@@ -181,7 +181,7 @@
                 </div>
                 @if (Route::has('register'))
                     <div class="d-grid">
-                        <a href="{{ route('register_employee') }}" class="btn btn-custom btn-lg fw-bold text-uppercase">{{ __('Register') }}</a>
+                        <a href="{{ route('register_user') }}" class="btn btn-custom btn-lg fw-bold text-uppercase">{{ __('Register') }}</a>
 
                     </div>
 
@@ -189,8 +189,8 @@
             </div>
             <div class="card"
             <div class="d-grid">
-                <h6 class="card-title text-center mb-4">{{ __('Would you like to start a business?') }}</h6>
-                <a href="/cusmenu" class="btn btn-custom btn-lg fw-bold ">Customer Account</a>
+                <h6 class="card-title text-center mb-4">{{ __('Do you have a business?') }}</h6>
+                <a href="/menu" class="btn btn-custom btn-lg fw-bold ">Business Account</a>
             </div>
             </div>
         </div>

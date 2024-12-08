@@ -20,6 +20,10 @@ Route::get('/menu', function () {
     return view('auth/menu');
 });
 
+Route::get('/cusmenu', function () {
+    return view('auth/customer_menu');
+});
+
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('register_employee', [AuthRegisterController::class, 'businessRegisterIndex'])->name('register_employee');
 Route::post('register-business', [AuthRegisterController::class, 'registerBusiness'])->name('register.business');

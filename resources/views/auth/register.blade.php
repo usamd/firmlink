@@ -115,15 +115,15 @@
 
                 <div class="card-body p-4 p-sm-5">
                     <div class="background-image-container">
-                        <img src="{{asset('assest/Biznest 1.png')}}" alt="Logo Image">
+                        <img src="{{asset('assest/ChatBG.png')}}" alt="Logo Image">
                     </div>
                     <div class="text-center mb-4 text-white font-size-lg">
                         Local Business Directory
                     </div>
 
                 <div class="d-grid gap-3 mb-2 button-container text-center" id="main-button-container" style="display">
-                    <a href="{{ route('register_user') }}" class="btn btn-login fw-bold rounded-pill px-3" id="signup-user-btn"style="width: 300px; margin: 0 auto;">Signup as a user</a>
-                    <a href="{{ route('register_employee') }}" class="btn btn-login fw-bold rounded-pill px-3" id="signup-employee-btn"style="width: 300px; margin: 0 auto;">Signup as an employee</a>
+                    <a href="{{ route('register_user') }}" class="btn btn-login fw-bold rounded-pill px-3" id="signup-user-btn"style="width: 300px; margin: 0 auto;">Signup as a Customer</a>
+                    <a href="{{ route('register_employee') }}" class="btn btn-login fw-bold rounded-pill px-3" id="signup-employee-btn"style="width: 300px; margin: 0 auto;">Signup as a Business</a>
                     <a href="{{ route('login') }}" id="login-btn" class="btn btn-login fw-bold rounded-pill px-3" style="width: 300px; margin: 0 auto;">Login</a>
 
                 </div>

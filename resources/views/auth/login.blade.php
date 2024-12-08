@@ -109,7 +109,7 @@
                 <div class="card-body p-4 p-sm-5">
                     <div class="background-image-container">
                         <!-- Place your image inside this div -->
-                        <img src="{{asset('assest/Biznest 1.png')}}" alt="Logo Image">
+                        <img src="{{asset('assest/ChatBG.png')}}" alt="Logo Image">
                     </div>
                     <div class="text-center mb-4 text-white font-size-lg">
                         Local Business Directory

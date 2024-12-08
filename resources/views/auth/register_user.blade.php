@@ -137,13 +137,13 @@
             <div class="card flex-row my-5 border-0 shadow rounded-3 overflow-hidden">
                 <div class="card-body p-4 p-sm-5">
                     <div class="background-image-container">
-                        <img src="{{asset('assest/Biznest 1.png')}}" alt="Logo Image">
+                        <img src="{{asset('assest/ChatBG.png')}}" alt="Logo Image">
                     </div>
                     <div class="text-center mb-4 text-white font-size-lg">
-                        Local Business Directory
+                        Register in the BIZNEST
                     </div>
 
-                    <h5 class="card-title text-center text-green mb-4 fw-light fs-lg" id="signup-user-text" ">{{ __('Signup as a User') }}</h5>
+                    <h5 class="card-title text-center text-green mb-4 fw-light fs-lg" id="signup-user-text" ">{{ __('Signup as a Customer') }}</h5>
 
                     <form method="POST" action="{{ route('register') }}" class="mb-4" id="user-registration-form">
                         @csrf
@@ -225,7 +225,7 @@
                                     </div>
                                     <div class="col-md-6 col-sm-12">
                                         <button class="btn btn-lg btn-login fw-bold text-uppercase rounded-pill w-100" type="button" id="emp-signup-shift-btn">
-                                            {{ __('Signup as an Employee') }}
+                                            {{ __('Signup as a Business') }}
                                         </button>
                                     </div>
                                 </div>

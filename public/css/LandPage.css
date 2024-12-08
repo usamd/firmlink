@@ -1,0 +1,318 @@
+/* Reset and Base Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    overflow-x: hidden;
+}
+
+/* Main Container */
+.main {
+    width: 100%;
+    max-width: 1920px;
+    margin: 0 auto;
+    background-color: rgb(21 32 43);
+    min-height: 100vh;
+}
+
+/* Navbar */
+.navbar {
+    width: 100%;
+    height: 80px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 50px;
+}
+
+.icon {
+    width: 300px;
+}
+
+.logo {
+    width: 200px;
+    height: 80px;
+    padding: 5px;
+}
+
+.menu {
+    flex-grow: 1;
+    max-width: 800px;
+}
+
+.menu ul {
+    display: flex;
+    justify-content: center;
+    gap: 50px;
+}
+
+ul li {
+    list-style: none;
+}
+
+ul li a {
+    text-decoration: none;
+    color: #fff;
+    font-size: 16px;
+    transition: 0.4s ease-in-out;
+}
+
+ul li a:hover {
+    color: rgb(0 175 49);
+}
+
+/* Buttons */
+.button {
+    display: flex;
+    gap: 20px;
+}
+
+.signup, .signin {
+    font-size: 14px;
+    font-weight: bold;
+    background-color: rgb(0 175 49);
+    padding: 12px 30px;
+    border-radius: 40px;
+    border: none;
+    color: white;
+    cursor: pointer;
+}
+
+/* Hero Section */
+.pic1 {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Search Section */
+.h1 {
+    text-align: center;
+    color: #fff;
+    margin: 50px 0;
+    font-size: 36px;
+}
+
+.srch {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.srch form {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+}
+
+input[type="text"],
+select {
+    padding: 20px;
+    font-size: 18px;
+    background-color: #232e38;
+    color: #797474;
+    border: 1px solid #232e38;
+    border-radius: 20px;
+    outline: none;
+    width: 400px;
+}
+
+button {
+    padding: 20px 40px;
+    background-color: rgb(0 175 49);
+    border: none;
+    border-radius: 30px;
+    color: white;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 18px;
+}
+
+/* Statistics Section */
+.pic {
+    padding: 50px 0;
+}
+
+.pic ul {
+    display: flex;
+    justify-content: center;
+    gap: 100px;
+}
+
+.pic ul li {
+    text-align: center;
+}
+
+.pic ul li p1 {
+    color: white;
+    font-size: 24px;
+    margin: 10px 0;
+    display: block;
+}
+
+.pic ul li p {
+    color: rgb(0 175 49);
+    font-size: 24px;
+}
+
+/* Bank Logos */
+.bank {
+    background-color: #232e38;
+    border-radius: 40px;
+    padding: 30px;
+    margin: 50px auto;
+    max-width: 1600px;
+}
+
+.bank ul {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+/* Featured Posts */
+.h2 {
+    font-size: 48px;
+    color: white;
+    text-align: center;
+    margin: 60px 0 30px;
+}
+
+.h3 {
+    color: #797474;
+    text-align: center;
+    font-style: italic;
+    font-size: 24px;
+    margin-bottom: 50px;
+}
+
+/* Job Sections */
+.job1, .job2 {
+    background-color: #232e38;
+    border-radius: 30px;
+    padding: 30px;
+    margin: 30px auto;
+    max-width: 1400px;
+}
+
+/* Testimonials */
+.testimonials {
+    padding: 80px 0;
+    max-width: 1600px;
+    margin: 0 auto;
+}
+
+.testimonials-item {
+    background-color: white;
+    padding: 30px;
+    border-radius: 20px;
+    margin: 20px;
+}
+
+.testimonials-item img {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+}
+
+.testimonials-item .name {
+    font-size: 24px;
+    margin: 10px 0;
+}
+
+/* Details Section */
+.detail {
+    color: white;
+    padding: 50px;
+    max-width: 1600px;
+    margin: 0 auto;
+}
+
+.detail h4 {
+    color: #00b132;
+    font-size: 32px;
+    margin: 30px 0;
+}
+
+.detail p {
+    font-size: 18px;
+    line-height: 1.6;
+    margin: 20px 0;
+}
+
+/* Media Queries */
+@media screen and (max-width: 1920px) {
+    .main {
+        width: 100%;
+    }
+}
+
+@media screen and (max-width: 1440px) {
+    .bank {
+        max-width: 1200px;
+    }
+
+    .job1, .job2 {
+        max-width: 1000px;
+    }
+}
+
+@media screen and (max-width: 1024px) {
+    .navbar {
+        padding: 0 20px;
+    }
+
+    .menu ul {
+        gap: 30px;
+    }
+
+    input[type="text"],
+    select {
+        width: 300px;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .menu {
+        display: none; /* Consider adding a mobile menu */
+    }
+
+    .srch form {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    input[type="text"],
+    select {
+        width: 100%;
+    }
+
+    .pic ul {
+        flex-direction: column;
+        gap: 30px;
+    }
+}
+
+/* Swiper Specific Styles */
+.swiper-pagination {
+    position: relative;
+    margin-top: 40px;
+}
+
+.swiper-pagination-bullet {
+    width: 12px;
+    height: 12px;
+    background: white;
+    opacity: 0.5;
+}
+
+.swiper-pagination-bullet-active {
+    opacity: 1;
+}
