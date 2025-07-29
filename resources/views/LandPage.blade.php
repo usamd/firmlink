@@ -8,14 +8,14 @@
 	<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
 	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-	<link rel="stylesheet" type="text/css" href="LandPage.css">
+	<link rel="stylesheet" type="text/css" href="{{ asset('Land Page/LandPage.css') }}">
 </head>
 <body>
 	<!-- Navigation -->
 	<nav class="navbar">
 		<div class="nav-container">
 			<div class="nav-logo">
-				<img src="Biznest 1.png" alt="BizNest Logo" class="logo">
+				<img src="{{ asset('assest/Biz.png') }}" alt="BizNest Logo" class="logo">
 				<span class="logo-text">BizNest</span>
 			</div>
 			
@@ -75,13 +75,14 @@
 				
 				<div class="hero-image">
 					<div class="image-container mirror-effect">
-						<img src="IMG-20240607-WA0014 .jpg" alt="Business professionals" class="hero-img">
+						<img src="{{ asset('Land Page/IMG-20240607-WA0014 .jpg') }}" alt="Business professionals" class="hero-img">
 						<div class="mirror-reflection"></div>
 					</div>
 				</div>
 			</div>
 		</div>
 	</section>
+
 	<!-- Stats Section -->
 	<section class="stats-section">
 		<div class="stats-container">
@@ -190,7 +191,7 @@
 			<div class="featured-grid">
 				<div class="featured-card mirror-card">
 					<div class="featured-image">
-						<img src="j1.jpg" alt="Featured Business 1">
+						<img src="{{ asset('Land Page/j1.jpg') }}" alt="Featured Business 1">
 						<div class="featured-badge">Premium</div>
 					</div>
 					<div class="featured-content">
@@ -206,7 +207,7 @@
 				
 				<div class="featured-card mirror-card">
 					<div class="featured-image">
-						<img src="j2.jpg" alt="Featured Business 2">
+						<img src="{{ asset('Land Page/j2.jpg') }}" alt="Featured Business 2">
 						<div class="featured-badge">Trending</div>
 					</div>
 					<div class="featured-content">
@@ -226,6 +227,7 @@
 			</div>
 		</div>
 	</section>
+
 	<!-- Business Advertisements Section -->
 	<section class="business-ads-section">
 		<div class="container">
@@ -237,7 +239,7 @@
 			<div class="ads-grid">
 				<div class="ad-card mirror-card">
 					<div class="ad-image">
-						<img src="IMG-20240607-WA0015.jpg" alt="Business Advertisement">
+						<img src="{{ asset('Land Page/IMG-20240607-WA0015.jpg') }}" alt="Business Advertisement">
 						<div class="ad-overlay">
 							<div class="ad-badge">Special Offer</div>
 						</div>
@@ -256,7 +258,7 @@
 				
 				<div class="ad-card mirror-card">
 					<div class="ad-image">
-						<img src="j1.jpg" alt="Restaurant Advertisement">
+						<img src="{{ asset('Land Page/j1.jpg') }}" alt="Restaurant Advertisement">
 						<div class="ad-overlay">
 							<div class="ad-badge">New Menu</div>
 						</div>
@@ -275,7 +277,7 @@
 				
 				<div class="ad-card mirror-card">
 					<div class="ad-image">
-						<img src="j2.jpg" alt="Service Advertisement">
+						<img src="{{ asset('Land Page/j2.jpg') }}" alt="Service Advertisement">
 						<div class="ad-overlay">
 							<div class="ad-badge">Premium Service</div>
 						</div>
@@ -347,7 +349,7 @@
 								</div>
 							</div>
 							<div class="testimonial-author">
-								<img src="c1.jpg" alt="Customer">
+								<img src="{{ asset('Land Page/c1.jpg') }}" alt="Customer">
 								<div class="author-info">
 									<h4>Priya Sharma</h4>
 									<span>Marketing Professional</span>
@@ -372,7 +374,7 @@
 								</div>
 							</div>
 							<div class="testimonial-author">
-								<img src="c2.jpg" alt="Business Owner">
+								<img src="{{ asset('Land Page/c2.jpg') }}" alt="Business Owner">
 								<div class="author-info">
 									<h4>Rajesh Fernando</h4>
 									<span>Restaurant Owner</span>
@@ -397,7 +399,7 @@
 								</div>
 							</div>
 							<div class="testimonial-author">
-								<img src="c3.jpg" alt="User">
+								<img src="{{ asset('Land Page/c3.jpg') }}" alt="User">
 								<div class="author-info">
 									<h4>Amara Silva</h4>
 									<span>Freelance Designer</span>
@@ -417,7 +419,7 @@
 			<div class="footer-content">
 				<div class="footer-section">
 					<div class="footer-logo">
-						<img src="Biznest 1.png" alt="BizNest Logo">
+						<img src="{{ asset('Land Page/Biznest 1.png') }}" alt="BizNest Logo">
 						<span>BizNest</span>
 					</div>
 					<p>Sri Lanka's premier business directory connecting customers with trusted local businesses.</p>
@@ -466,6 +468,8 @@
 						<a href="#">Privacy Policy</a>
 						<a href="#">Terms of Service</a>
 						<a href="#">Cookie Policy</a>
+					</div>
+				</div>
 			</div>
 		</div>
 	</footer>
