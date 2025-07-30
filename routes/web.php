@@ -29,6 +29,11 @@ Route::get('register_employee', [AuthRegisterController::class, 'businessRegiste
 Route::post('register-business', [AuthRegisterController::class, 'registerBusiness'])->name('register.business');
 Route::get('register_user', [AuthRegisterController::class, 'userRegisterIndex'])->name('register_user');
 
+// Authentication routes
+Route::get('/login', function () {
+    return view('auth.login');
+})->name('login');
+
 Route::get('about-us', [AboutUsController::class, 'AboutUsIndex'])->name('about_us');
 
 Route::get('/user/dashboard/dashboard', [DashboardController::class, 'index'])->name('user.dashboard.dashboard');

@@ -1,244 +1,562 @@
-@extends('layouts.guestapp')
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>Sign Up - BizNest</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="description" content="Join BizNest - Professional Business Listings Platform">
+	<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+	<style>
+		/* Reset and Base Styles */
+		* {
+			margin: 0;
+			padding: 0;
+			box-sizing: border-box;
+		}
 
-@section('content')
-<style>
-     *,
-    *::before,
-    *::after {
-        box-sizing: border-box;
-    }
-    body {
-        background: linear-gradient(135deg, #15202B 40%, #09a509 100%);
-        margin: 0;
-        padding: 0;
-        font-family: sans-serif;
-        width: 100%;
-        height: auto !important;
-    }
+		body {
+			font-family: 'Inter', sans-serif;
+			line-height: 1.6;
+			color: #1a2e1a;
+			background: linear-gradient(135deg, #1e3932 0%, #2c5530 100%);
+			min-height: 100vh;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			position: relative;
+			overflow: hidden;
+			padding: 20px 0;
+		}
 
+		body::before {
+			content: '';
+			position: absolute;
+			top: 0;
+			left: 0;
+			right: 0;
+			bottom: 0;
+			background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="0.5"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
+			opacity: 0.3;
+		}
 
-    .background-image-container {
-        position: relative;
-        overflow: hidden;
-        width: 100%;
-        height: 200px; /* Adjust the height as needed */
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
+		.auth-container {
+			position: relative;
+			z-index: 2;
+			width: 100%;
+			max-width: 1200px;
+			margin: 0 auto;
+			padding: 20px;
+		}
 
-    .background-image-container img {
-        max-width: 80%; /* Adjust the size of the image */
-        max-height: 80%; /* Adjust the size of the image */
-        object-fit: contain; /* Ensure the image fits within its container */
-    }
+		.auth-card {
+			background: rgba(255, 255, 255, 0.1);
+			backdrop-filter: blur(10px);
+			border: 1px solid rgba(255, 255, 255, 0.2);
+			border-radius: 20px;
+			box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+			display: grid;
+			grid-template-columns: 1fr 1fr;
+			min-height: 700px;
+			overflow: hidden;
+			position: relative;
+		}
 
-    .text-white {
-        color: white;
+		.auth-card::before {
+			content: '';
+			position: absolute;
+			top: 0;
+			left: -100%;
+			width: 100%;
+			height: 100%;
+			background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+			transition: left 0.8s ease;
+		}
 
-    }
+		.auth-card:hover::before {
+			left: 100%;
+		}
 
-    .font-size-lg {
-        font-size: 1.25rem; /* Adjust the font size as needed */
-    }
+		.auth-left {
+			padding: 50px 40px;
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			color: white;
+			max-height: 700px;
+			overflow-y: auto;
+		}
 
-    .fs-lg {
-        font-size: 2.50rem; /* Adjust the font size as needed */
-    }
+		.auth-right {
+			background: linear-gradient(135deg, #0f4c3a 0%, #1a5d4a 100%);
+			padding: 60px 50px;
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			align-items: center;
+			position: relative;
+			overflow: hidden;
+		}
 
-    .btn-login {
-        font-size: 0.9rem;
-        letter-spacing: 0.05rem;
-        padding: 0.75rem 1rem;
-        color: white !important;
-        background-color: #015701;
+		.auth-right::after {
+			content: '';
+			position: absolute;
+			top: 0;
+			left: 0;
+			right: 0;
+			bottom: 0;
+			background: linear-gradient(45deg, transparent 30%, rgba(255, 255, 255, 0.1) 50%, transparent 70%);
+			animation: mirror-sweep 4s ease-in-out infinite;
+		}
 
+		@keyframes mirror-sweep {
+			0% { transform: translateX(-100%) skewX(-15deg); }
+			50% { transform: translateX(100%) skewX(-15deg); }
+			100% { transform: translateX(100%) skewX(-15deg); }
+		}
 
-    }
-    .btn-login:hover{
+		.logo-section {
+			display: flex;
+			align-items: center;
+			gap: 15px;
+			margin-bottom: 25px;
+		}
 
-        color: rgb(255, 255, 255) !important;
-        background-color:rgb(0, 0, 0) ;
-    }
+		.logo {
+			width: 50px;
+			height: 50px;
+			border-radius: 50%;
+		}
 
-    .btn-google, .btn-facebook, .btn-github {
-        color: white !important;
-        background-color: rgb(0, 0, 0);
-        display: inline-block;
-        width: auto;
-        padding: 0.5rem 1rem;
-        margin-right: 0.5rem;
-    }
+		.logo-text {
+			font-size: 28px;
+			font-weight: 700;
+			background: linear-gradient(135deg, #7fb069, #588157);
+			-webkit-background-clip: text;
+			-webkit-text-fill-color: transparent;
+			background-clip: text;
+		}
 
-    .card {
-        background: rgba(255, 255, 255, 0.2);
-        box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-        backdrop-filter: blur(5px);
-        -webkit-backdrop-filter: blur(5px);
-        border-radius: 10px;
-        border: 1px solid rgba(255, 255, 255, 0.3);
-        height: auto !important;
-    }
+		.auth-title {
+			font-size: 2.2rem;
+			font-weight: 700;
+			margin-bottom: 10px;
+			color: white;
+		}
 
-    .card-title {
-        color: green;
-    }
+		.auth-subtitle {
+			font-size: 1rem;
+			opacity: 0.9;
+			margin-bottom: 30px;
+			line-height: 1.6;
+		}
 
-    .form-check-label {
-        color: white;
-    }
-    .text-green {
-        color: rgb(13, 167, 13);
-    }
-    .custom-form-input {
-        width: 100%; /* Adjust the width as needed */
-        margin: 0 auto;
-         /* Center the form inputs horizontally */
-    }
-    .custom-button-container{
-        margin-top:40px;
-    }
+		.form-container {
+			width: 100%;
+			max-width: 500px;
+			position: relative;
+			z-index: 3;
+		}
 
-    .btn-link{
-        color:white;
-    }
+		.form-row {
+			display: grid;
+			grid-template-columns: 1fr 1fr;
+			gap: 15px;
+			margin-bottom: 20px;
+		}
 
-    .btn-link:hover{
-        color:white;
-    }
+		.form-group {
+			margin-bottom: 20px;
+		}
 
-    @media (max-width: 576px) {
-        .custom-form-input {
-            width: 100% !important;
-            margin-left: 0%;
-            margin-right: 20px;
+		.form-group.full-width {
+			grid-column: span 2;
+		}
 
-        }
-        .btn-login {
-            width: 100% !important;
-        }
-    }
+		.form-label {
+			display: block;
+			margin-bottom: 6px;
+			font-weight: 500;
+			color: white;
+			font-size: 0.9rem;
+		}
 
-</style>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script>
-    $(document).ready(function() {
+		.form-input {
+			width: 100%;
+			padding: 12px 15px;
+			border: 2px solid rgba(255, 255, 255, 0.2);
+			background: rgba(255, 255, 255, 0.1);
+			border-radius: 8px;
+			font-size: 14px;
+			color: white;
+			outline: none;
+			transition: all 0.3s ease;
+			backdrop-filter: blur(5px);
+		}
 
-        // Redirect to employee registration page when "Signup as an employee" button is clicked
-        $("#emp-signup-shift-btn").click(function() {
-            window.location.href = "{{ route('register_employee') }}";
-        });
-    });
-</script>
+		.form-input::placeholder {
+			color: rgba(255, 255, 255, 0.6);
+		}
 
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-lg-10 col-xl-9 mx-auto">
-            <div class="card flex-row my-5 border-0 shadow rounded-3 overflow-hidden">
-                <div class="card-body p-4 p-sm-5">
-                    <div class="background-image-container">
-                        <img src="{{asset('assest/ChatBG.png')}}" alt="Logo Image">
-                    </div>
-                    <div class="text-center mb-4 text-white font-size-lg">
-                        Register in the BIZNEST
-                    </div>
+		.form-input:focus {
+			border-color: #7fb069;
+			box-shadow: 0 0 0 3px rgba(127, 176, 105, 0.2);
+			background: rgba(255, 255, 255, 0.15);
+		}
 
-                    <h5 class="card-title text-center text-green mb-4 fw-light fs-lg" id="signup-user-text" ">{{ __('Signup as a Customer') }}</h5>
+		.btn-auth {
+			width: 100%;
+			padding: 15px;
+			background: linear-gradient(135deg, #7fb069, #588157);
+			color: #1a2e1a;
+			border: none;
+			border-radius: 10px;
+			font-weight: 600;
+			font-size: 1.1rem;
+			cursor: pointer;
+			transition: all 0.3s ease;
+			margin-top: 10px;
+			margin-bottom: 20px;
+		}
 
-                    <form method="POST" action="{{ route('register') }}" class="mb-4" id="user-registration-form">
-                        @csrf
-                        <div class="row">
-                            <!-- Left column -->
-                            <div class="col-md-6 col-sm-12">
-                                <!-- Existing form fields -->
-                                <div class="form-floating mb-3 custom-form-input">
-                                    <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" placeholder="Name" required autocomplete="name" autofocus>
-                                        <label for="name">{{ __('Name') }}</label>
-                                            @error('name')
-                                                <span class="invalid-feedback" role="alert">
-                                                    <strong>{{ $message }}</strong>
-                                                </span>
-                                            @enderror
-                                </div>
+		.btn-auth:hover {
+			transform: translateY(-2px);
+			box-shadow: 0 10px 25px rgba(127, 176, 105, 0.4);
+		}
 
-                                <div class="form-floating mb-3 custom-form-input">
-                                    <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" placeholder="name@example.com" required autocomplete="email">
-                                        <label for="email">{{ __('Email Address') }}</label>
-                                            @error('email')
-                                                <span class="invalid-feedback" role="alert">
-                                                    <strong>{{ $message }}</strong>
-                                                </span>
-                                            @enderror
-                                </div>
+		.auth-links {
+			text-align: center;
+			margin-top: 15px;
+		}
 
-                                <div class="form-floating mb-3 custom-form-input">
-                                    <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" placeholder="Password" required autocomplete="new-password">
-                                        <label for="password">{{ __('Password') }}</label>
-                                            @error('password')
-                                                <span class="invalid-feedback" role="alert">
-                                                    <strong>{{ $message }}</strong>
-                                                </span>
-                                            @enderror
-                                        </div>
+		.auth-link {
+			color: #7fb069;
+			text-decoration: none;
+			font-weight: 500;
+			transition: color 0.3s ease;
+		}
 
-                                <div class="form-floating mb-3 custom-form-input">
-                                    <input id="password-confirm" type="password" class="form-control" name="password_confirmation" placeholder="Confirm Password" required autocomplete="new-password">
-                                        <label for="password-confirm">{{ __('Confirm Password') }}</label>
-                                </div>
-                            </div>
+		.auth-link:hover {
+			color: #588157;
+		}
 
-                            <!-- Right column -->
-                            <div class="col-md-6 col-sm-12">
-                                <!-- Additional fields -->
-                                <div class="form-floating mb-3 custom-form-input">
-                                    <input id="address" type="text" class="form-control" name="address" placeholder="Address" required>
-                                    <label for="address">Address</label>
-                                </div>
+		.divider {
+			display: flex;
+			align-items: center;
+			margin: 20px 0;
+			color: rgba(255, 255, 255, 0.6);
+		}
 
-                                <div class="form-floating mb-3 custom-form-input">
-                                    <input id="nearest_city" type="text" class="form-control" name="nearest_city" placeholder="Nearest City" required>
-                                    <label for="nearest_city">Nearest City</label>
-                                </div>
+		.divider::before,
+		.divider::after {
+			content: '';
+			flex: 1;
+			height: 1px;
+			background: rgba(255, 255, 255, 0.2);
+		}
 
-                                <div class="form-floating mb-3 custom-form-input">
-                                    <input id="mobile_number" type="text" class="form-control" name="mobile_number" placeholder="Mobile Number" required>
-                                    <label for="mobile_number">Mobile Number</label>
-                                </div>
+		.divider span {
+			padding: 0 15px;
+			font-size: 0.9rem;
+		}
 
-                                <div class="form-floating mb-3 custom-form-input">
-                                    <input id="id_number" type="text" class="form-control" name="id_number" placeholder="ID Number" required>
-                                    <label for="id_number">ID Number</label>
-                                </div>
-                                <!-- More additional fields -->
-                            </div>
-                        </div>
+		.hero-image {
+			position: relative;
+			margin-bottom: 30px;
+		}
 
-                        <!-- Link for signing in, HR, and social media buttons -->
+		.image-container {
+			position: relative;
+			border-radius: 15px;
+			overflow: hidden;
+			max-width: 300px;
+			margin: 0 auto;
+		}
 
-                        <div class="container">
-                            <div class="d-grid gap-2 custom-form-input text-center">
-                                <div class="row justify-content-center">
-                                    <div class="col-md-6 col-sm-12 mb-2 mb-md-0">
-                                        <button class="btn btn-lg btn-login fw-bold text-uppercase rounded-pill w-100" type="submit">
-                                            {{ __('Register') }}
-                                        </button>
-                                    </div>
-                                    <div class="col-md-6 col-sm-12">
-                                        <button class="btn btn-lg btn-login fw-bold text-uppercase rounded-pill w-100" type="button" id="emp-signup-shift-btn">
-                                            {{ __('Signup as a Business') }}
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <hr class="my-4">
-                        <a class="d-block text-center btn-link mt-2 small" href="{{ route('login') }}">{{ __('Have an account? Sign In') }}</a>
+		.hero-img {
+			width: 100%;
+			height: 250px;
+			object-fit: cover;
+			border-radius: 15px;
+		}
 
-                    </form>
+		.mirror-effect {
+			position: relative;
+		}
 
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-@endsection
+		.mirror-effect::after {
+			content: '';
+			position: absolute;
+			top: 0;
+			left: 0;
+			right: 0;
+			bottom: 0;
+			background: linear-gradient(45deg, transparent 30%, rgba(255, 255, 255, 0.1) 50%, transparent 70%);
+			animation: mirror-sweep 3s ease-in-out infinite;
+			border-radius: 15px;
+		}
+
+		.welcome-text {
+			text-align: center;
+			color: white;
+			margin-bottom: 20px;
+		}
+
+		.welcome-text h3 {
+			font-size: 1.5rem;
+			font-weight: 600;
+			margin-bottom: 10px;
+		}
+
+		.welcome-text p {
+			opacity: 0.9;
+			line-height: 1.6;
+		}
+
+		.invalid-feedback {
+			color: #ff6b6b;
+			font-size: 0.85rem;
+			margin-top: 5px;
+		}
+
+		/* Responsive Design */
+		@media (max-width: 768px) {
+			.auth-card {
+				grid-template-columns: 1fr;
+				min-height: auto;
+			}
+
+			.auth-left,
+			.auth-right {
+				padding: 40px 30px;
+				max-height: none;
+			}
+
+			.auth-title {
+				font-size: 1.8rem;
+			}
+
+			.auth-container {
+				padding: 15px;
+			}
+
+			.form-row {
+				grid-template-columns: 1fr;
+				gap: 0;
+			}
+
+			.form-group.full-width {
+				grid-column: span 1;
+			}
+		}
+
+		@media (max-width: 480px) {
+			.auth-left,
+			.auth-right {
+				padding: 30px 20px;
+			}
+
+			.auth-title {
+				font-size: 1.6rem;
+			}
+
+			.form-container {
+				max-width: 100%;
+			}
+		}
+	</style>
+</head>
+<body>
+	<div class="auth-container">
+		<div class="auth-card">
+			<!-- Left Side - Signup Form -->
+			<div class="auth-left">
+				<div class="logo-section">
+					<img src="{{ asset('assest/Biz.png') }}" alt="BizNest Logo" class="logo">
+					<span class="logo-text">BizNest</span>
+				</div>
+				
+				<h1 class="auth-title">Join BizNest</h1>
+				<p class="auth-subtitle">Create your account and start connecting with Sri Lanka's premier business community today.</p>
+				
+				<div class="form-container">
+					<form method="POST" action="{{ route('register') }}" id="user-registration-form">
+						@csrf
+						
+						<div class="form-row">
+							<div class="form-group">
+								<label for="name" class="form-label">
+									<i class="fas fa-user"></i> Full Name
+								</label>
+								<input id="name" type="text" class="form-input @error('name') is-invalid @enderror" 
+									   name="name" value="{{ old('name') }}" required autocomplete="name" autofocus 
+									   placeholder="Enter your full name">
+								@error('name')
+									<span class="invalid-feedback" role="alert">
+										<strong>{{ $message }}</strong>
+									</span>
+								@enderror
+							</div>
+							
+							<div class="form-group">
+								<label for="phone" class="form-label">
+									<i class="fas fa-phone"></i> Phone Number
+								</label>
+								<input id="phone" type="text" class="form-input @error('phone') is-invalid @enderror" 
+									   name="phone" value="{{ old('phone') }}" required 
+									   placeholder="Enter your phone number">
+								@error('phone')
+									<span class="invalid-feedback" role="alert">
+										<strong>{{ $message }}</strong>
+									</span>
+								@enderror
+							</div>
+						</div>
+						
+						<div class="form-group full-width">
+							<label for="email" class="form-label">
+								<i class="fas fa-envelope"></i> Email Address
+							</label>
+							<input id="email" type="email" class="form-input @error('email') is-invalid @enderror" 
+								   name="email" value="{{ old('email') }}" required autocomplete="email" 
+								   placeholder="Enter your email address">
+							@error('email')
+								<span class="invalid-feedback" role="alert">
+									<strong>{{ $message }}</strong>
+								</span>
+							@enderror
+						</div>
+						
+						<div class="form-row">
+							<div class="form-group">
+								<label for="password" class="form-label">
+									<i class="fas fa-lock"></i> Password
+								</label>
+								<input id="password" type="password" class="form-input @error('password') is-invalid @enderror" 
+									   name="password" required autocomplete="new-password" 
+									   placeholder="Create a password">
+								@error('password')
+									<span class="invalid-feedback" role="alert">
+										<strong>{{ $message }}</strong>
+									</span>
+								@enderror
+							</div>
+							
+							<div class="form-group">
+								<label for="password-confirm" class="form-label">
+									<i class="fas fa-lock"></i> Confirm Password
+								</label>
+								<input id="password-confirm" type="password" class="form-input" 
+									   name="password_confirmation" required autocomplete="new-password" 
+									   placeholder="Confirm your password">
+							</div>
+						</div>
+						
+						<div class="form-row">
+							<div class="form-group">
+								<label for="address" class="form-label">
+									<i class="fas fa-map-marker-alt"></i> Address
+								</label>
+								<input id="address" type="text" class="form-input @error('address') is-invalid @enderror" 
+									   name="address" value="{{ old('address') }}" required 
+									   placeholder="Enter your address">
+								@error('address')
+									<span class="invalid-feedback" role="alert">
+										<strong>{{ $message }}</strong>
+									</span>
+								@enderror
+							</div>
+							
+							<div class="form-group">
+								<label for="district" class="form-label">
+									<i class="fas fa-map"></i> District
+								</label>
+								<select id="district" class="form-input @error('district') is-invalid @enderror" 
+										name="district" required style="cursor: pointer;">
+									<option value="" disabled selected>Select District</option>
+									<option value="Colombo" {{ old('district') == 'Colombo' ? 'selected' : '' }}>Colombo</option>
+									<option value="Gampaha" {{ old('district') == 'Gampaha' ? 'selected' : '' }}>Gampaha</option>
+									<option value="Kalutara" {{ old('district') == 'Kalutara' ? 'selected' : '' }}>Kalutara</option>
+									<option value="Kandy" {{ old('district') == 'Kandy' ? 'selected' : '' }}>Kandy</option>
+									<option value="Matale" {{ old('district') == 'Matale' ? 'selected' : '' }}>Matale</option>
+									<option value="Nuwara Eliya" {{ old('district') == 'Nuwara Eliya' ? 'selected' : '' }}>Nuwara Eliya</option>
+									<option value="Galle" {{ old('district') == 'Galle' ? 'selected' : '' }}>Galle</option>
+									<option value="Matara" {{ old('district') == 'Matara' ? 'selected' : '' }}>Matara</option>
+									<option value="Hambantota" {{ old('district') == 'Hambantota' ? 'selected' : '' }}>Hambantota</option>
+									<option value="Jaffna" {{ old('district') == 'Jaffna' ? 'selected' : '' }}>Jaffna</option>
+									<option value="Ratnapura" {{ old('district') == 'Ratnapura' ? 'selected' : '' }}>Ratnapura</option>
+									<option value="Kegalle" {{ old('district') == 'Kegalle' ? 'selected' : '' }}>Kegalle</option>
+								</select>
+								@error('district')
+									<span class="invalid-feedback" role="alert">
+										<strong>{{ $message }}</strong>
+									</span>
+								@enderror
+							</div>
+						</div>
+						
+						<div class="form-group">
+							<label class="form-label" style="display: flex; align-items: center; gap: 8px;">
+								<input type="checkbox" id="terms" name="terms" required>
+								I agree to the <a href="#" style="color: #7fb069; text-decoration: none;">Terms and Conditions</a>
+							</label>
+						</div>
+						
+						<button type="submit" class="btn-auth">
+							<i class="fas fa-user-plus"></i> Create Account
+						</button>
+					</form>
+					
+					<div class="divider">
+						<span>or</span>
+					</div>
+					
+					<div class="auth-links">
+						<p style="color: rgba(255, 255, 255, 0.8); margin-bottom: 10px;">Already have an account?</p>
+						<a href="{{ route('login') }}" class="auth-link">
+							<i class="fas fa-sign-in-alt"></i> Sign In
+						</a>
+					</div>
+					
+					<div class="auth-links" style="margin-top: 15px;">
+						<a href="{{ route('register_employee') }}" class="auth-link">
+							<i class="fas fa-briefcase"></i> Register as Business Employee
+						</a>
+					</div>
+				</div>
+			</div>
+			
+			<!-- Right Side - Welcome Image -->
+			<div class="auth-right">
+				<div class="hero-image">
+					<div class="image-container mirror-effect">
+						<img src="{{ asset('assest/IMG-20240607-WA0014 .jpg') }}" alt="Business professionals" class="hero-img">
+					</div>
+				</div>
+				
+				<div class="welcome-text">
+					<h3>Start Your Business Journey</h3>
+					<p>Join thousands of businesses and entrepreneurs in Sri Lanka's fastest-growing business directory. Create your profile, showcase your services, and connect with potential customers today.</p>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Back to Home Link -->
+	<div style="position: fixed; top: 20px; left: 20px; z-index: 1000;">
+		<a href="{{ url('/') }}" style="color: #7fb069; text-decoration: none; font-weight: 500; display: flex; align-items: center; gap: 8px; background: rgba(255, 255, 255, 0.1); padding: 10px 15px; border-radius: 25px; backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.2); transition: all 0.3s ease;" 
+		   onmouseover="this.style.background='rgba(127, 176, 105, 0.2)'" 
+		   onmouseout="this.style.background='rgba(255, 255, 255, 0.1)'">
+			<i class="fas fa-arrow-left"></i> Back to Home
+		</a>
+	</div>
+
+	<script>
+		// Add any JavaScript for form validation or interactions here
+		document.addEventListener('DOMContentLoaded', function() {
+			// Form validation or other interactions can be added here
+		});
+	</script>
+
+</body>
+</html>

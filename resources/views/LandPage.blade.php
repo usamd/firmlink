@@ -27,8 +27,8 @@
 			</div>
 
 			<div class="nav-buttons">
-				<button class="btn-secondary">Sign In</button>
-				<button class="btn-primary">Sign Up</button>
+				<a href="{{ route('login') }}" class="btn-secondary">Sign In</a>
+				<a href="{{ route('register_user') }}" class="btn-primary">Sign Up</a>
 			</div>
 		</div>
 	</nav>
@@ -75,7 +75,7 @@
 				
 				<div class="hero-image">
 					<div class="image-container mirror-effect">
-						<img src="{{ asset('Land Page/IMG-20240607-WA0014 .jpg') }}" alt="Business professionals" class="hero-img">
+						<img src="{{ asset('assest/IMG-20240607-WA0014 .jpg') }}" alt="Business professionals" class="hero-img">
 						<div class="mirror-reflection"></div>
 					</div>
 				</div>
@@ -419,7 +419,7 @@
 			<div class="footer-content">
 				<div class="footer-section">
 					<div class="footer-logo">
-						<img src="{{ asset('Land Page/Biznest 1.png') }}" alt="BizNest Logo">
+						<img src="{{ asset('assest/Biz.png') }}" alt="BizNest Logo">
 						<span>BizNest</span>
 					</div>
 					<p>Sri Lanka's premier business directory connecting customers with trusted local businesses.</p>
