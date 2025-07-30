@@ -71,3 +71,7 @@ Route::controller(MessageController::class)->group(function(){
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('/user/update', [UserController::class, 'update']);
 });
+
+Route::get('/messagedashboard', function () {
+    return view('messageDashboard');
+})->name('messagedashboard');
