@@ -40,7 +40,8 @@ Route::get('/user/dashboard/dashboard', [DashboardController::class, 'index'])->
 Route::get('/user/dashboard/explore', [DashboardController::class, 'explore']);
 Route::get('/user/dashboard/notification', [DashboardController::class, 'notification']);
 Route::get('/user/dashboard/newsfeed', [DashboardController::class, 'newsfeed']);
-Route::get('/user/dashboard/profile', [DashboardController::class, 'profile']);
+Route::get('/user/dashboard/profile', [DashboardController::class, 'profile'])->name('user.dashboard.profile');
+Route::get('/user/dashboard/settings', [DashboardController::class, 'settings'])->name('user.dashboard.settings');
 
 Route::get('/chat', [ChatController::class, 'index'])->name('chat.index');
 Route::get('/settings', [UserController::class, 'settings'])->name('settings');

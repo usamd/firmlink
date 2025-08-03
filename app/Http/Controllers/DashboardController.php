@@ -44,7 +44,21 @@ class DashboardController extends Controller
     {
         $userID = 1; // Replace with actual logged-in user ID logic
         $users = DB::table('users')->where('id', $userID)->first();
+        
+        // Fetch products for the user (assuming you have a products table)
+        // If you don't have a products table yet, this will return an empty collection
+        $products = collect([]); // Empty collection as placeholder
+        // Uncomment and modify this line when you have a products table:
+        // $products = DB::table('products')->where('user_id', $userID)->get();
 
-        return view('user.dashboard.profile', compact('users'));
+        return view('user.dashboard.profile', compact('users', 'products'));
+    }
+
+    public function settings()
+    {
+        $userID = 1; // Replace with actual logged-in user ID logic
+        $users = DB::table('users')->where('id', $userID)->first();
+
+        return view('user.dashboard.settings', compact('users'));
     }
 }
