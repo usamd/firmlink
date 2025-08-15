@@ -1,24 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>BizNest - Business Media Hub</title>
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-	<style>
-		* {
-			margin: 0;
-			padding: 0;
-			box-sizing: border-box;
-		}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BizNest - Business Media Hub</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-		body {
-			font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-			background: linear-gradient(135deg, #0a0f0a 0%, #1a2f1a 50%, #0f1f0f 100%);
-			color: white;
-			overflow-x: hidden;
-			position: relative;
-		}
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #0a0f0a 0%, #1a2f1a 50%, #0f1f0f 100%);
+            color: white;
+            overflow-x: hidden;
+            position: relative;
+        }
 
 		/* Animated Background Particles */
 		.bg-particles {
@@ -3090,6 +3091,14 @@
 						</div>
 					</div>
 				</div>
+				<div class="nav-buttons">
+					<form method="POST" action="{{ route('logout') }}" style="display: inline;">
+						@csrf
+						<button type="submit" class="nav-btn logout-btn" title="Logout">
+							<i class="fas fa-sign-out-alt"></i>
+						</button>
+					</form>
+				</div>
 				<div class="profile-actions">
 					<button class="profile-btn primary">
 						<i class="fas fa-edit"></i>
@@ -3151,7 +3160,7 @@
 					<h4 class="nav-section-title">Business Tools</h4>
 					<ul class="nav-menu">
 						<li class="nav-item">
-							<a href="#" class="nav-link">
+							<a href="{{ route('user.dashboard.analytics') }}" class="nav-link">
 								<div class="nav-icon">
 									<i class="fas fa-chart-line"></i>
 								</div>
@@ -3159,16 +3168,16 @@
 							</a>
 						</li>
 						<li class="nav-item">
-							<a href="#" class="nav-link">
+							<a href="{{ route('user.dashboard.promotions') }}" class="nav-link">
 								<div class="nav-icon">
 									<i class="fas fa-bullhorn"></i>
 								</div>
-								<span class="nav-text">Advertising</span>
+								<span class="nav-text">Promotions</span>
 								<span class="nav-badge new">New</span>
 							</a>
 						</li>
 						<li class="nav-item">
-							<a href="#" class="nav-link">
+							<a href="{{ route('user.dashboard.partnerships') }}" class="nav-link">
 								<div class="nav-icon">
 									<i class="fas fa-handshake"></i>
 								</div>
@@ -3176,7 +3185,7 @@
 							</a>
 						</li>
 						<li class="nav-item">
-							<a href="#" class="nav-link">
+							<a href="{{ route('user.dashboard.events') }}" class="nav-link">
 								<div class="nav-icon">
 									<i class="fas fa-calendar-alt"></i>
 								</div>

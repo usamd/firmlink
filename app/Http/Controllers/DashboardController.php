@@ -61,4 +61,36 @@ class DashboardController extends Controller
 
         return view('user.dashboard.settings', compact('users'));
     }
+
+    public function analytics()
+    {
+        $userID = 1; // Replace with actual logged-in user ID logic
+        $users = DB::table('users')->where('id', $userID)->first();
+
+        return view('user.dashboard.analytics', compact('users'));
+    }
+
+    public function promotions()
+    {
+        $userID = 1; // Replace with actual logged-in user ID logic
+        $users = DB::table('users')->where('id', $userID)->first();
+
+        return view('user.dashboard.promotions', compact('users'));
+    }
+
+    public function partnerships()
+    {
+        $userID = 1; // Replace with actual logged-in user ID logic
+        $users = DB::table('users')->where('id', $userID)->first();
+
+        return view('user.dashboard.partnerships', compact('users'));
+    }
+
+    public function events()
+    {
+        $userID = 1; // Replace with actual logged-in user ID logic
+        $users = DB::table('users')->where('id', $userID)->first();
+
+        return view('user.dashboard.events', compact('users'));
+    }
 }

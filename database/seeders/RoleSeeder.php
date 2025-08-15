@@ -2,9 +2,8 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\Role;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
 
 class RoleSeeder extends Seeder
 {
@@ -13,15 +12,12 @@ class RoleSeeder extends Seeder
      */
     public function run(): void
     {
-        $roles = [
-            ['name' => 'Business_Owner'],
-            ['name' => 'User'],
-            ['name' => 'Root'],
-            ['name' => 'Admin'],
+        // Create default roles using the Role model's static method
+        Role::createDefaultRoles();
 
-        ];
-
-        // Insert data into 'roles' table
-        DB::table('roles')->insert($roles);
+        $this->command->info('Default roles created successfully!');
+        $this->command->info('- Admin: Full system access and control');
+        $this->command->info('- Business: Can manage business profiles and content');
+        $this->command->info('- Customer: Can browse and interact with businesses');
     }
 }

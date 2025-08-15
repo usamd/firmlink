@@ -7,17 +7,16 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 
-class RoleMiddleware
+class AdminMiddleware
 {
     /**
      * Handle an incoming request.
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \Closure(\Illuminate\Http\Request): (\Illuminate\Http\Response|\Illuminate\Http\RedirectResponse)  $next
-     * @param  string  ...$roles
      * @return \Illuminate\Http\Response|\Illuminate\Http\RedirectResponse
      */
-    public function handle(Request $request, Closure $next, ...$roles)
+    public function handle(Request $request, Closure $next)
     {
         // Check if user is authenticated
         if (!Auth::check()) {
@@ -47,28 +46,21 @@ class RoleMiddleware
             return redirect()->route('login')->with('error', 'Your account has been deactivated.');
         }
 
-        // If no roles specified, just check if user is authenticated and active
-        if (empty($roles)) {
-            return $next($request);
-        }
-
-        // Check if user has any of the required roles
-        if (!$user->hasAnyRole($roles)) {
-            $rolesList = implode(', ', $roles);
-            
+        // Check if user has admin role
+        if (!$user->isAdmin()) {
             if ($request->expectsJson()) {
                 return response()->json([
                     'error' => 'Access denied',
-                    'message' => "You must have one of the following roles: {$rolesList}"
+                    'message' => 'You do not have permission to access this resource.'
                 ], 403);
             }
             
-            return redirect()->route('user.dashboard')->with('error', "Access denied. Required role: {$rolesList}");
+            return redirect()->route('user.dashboard')->with('error', 'Access denied. Admin privileges required.');
         }
 
-        // Check specific permissions if provided in route action
+        // Check specific admin permissions if provided
         $permission = $request->route()->getAction('permission');
-        if ($permission && !$user->role->hasPermission($permission) && !$user->isAdmin()) {
+        if ($permission && !$user->role->hasPermission($permission)) {
             if ($request->expectsJson()) {
                 return response()->json([
                     'error' => 'Insufficient permissions',

@@ -8,6 +8,7 @@ use App\Providers\RouteServiceProvider;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 use Illuminate\View\View;
 
 class AuthenticatedSessionController extends Controller
@@ -29,11 +30,20 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
-        if($request->user()->usertype ==='admin'){
-            return redirect('admin/dashboard');
-        }
+        // Get the authenticated user
+        $user = $request->user();
+        
+        // Update last login timestamp
+        $user->update(['last_login_at' => now()]);
 
-        return redirect()->intended(RouteServiceProvider::HOME);
+        // Role-based redirect after login
+        if ($user->isAdmin()) {
+            return redirect()->route('admin.dashboard')->with('success', 'Welcome to Admin Dashboard!');
+        } elseif ($user->isBusiness()) {
+            return redirect()->route('business.dashboard')->with('success', 'Welcome back! Manage your business profile and posts.');
+        } else {
+            return redirect()->route('user.dashboard')->with('success', 'Welcome back to BizNest!');
+        }
     }
 
     /**

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Dashboard - BizNest</title>
+    <title>Business Dashboard - BizNest</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
@@ -27,7 +27,7 @@
 
         /* Sidebar */
         .sidebar {
-            width: 300px;
+            width: 280px;
             background: rgba(15, 32, 39, 0.95);
             backdrop-filter: blur(20px);
             border-right: 1px solid rgba(255, 255, 255, 0.1);
@@ -48,17 +48,10 @@
         }
 
         .logo h2 {
-            color: #ef4444;
+            color: #4ade80;
             font-size: 2rem;
             font-weight: bold;
-            text-shadow: 0 0 20px rgba(239, 68, 68, 0.5);
-        }
-
-        .logo span {
-            color: #9ca3af;
-            font-size: 0.9rem;
-            display: block;
-            margin-top: 0.5rem;
+            text-shadow: 0 0 20px rgba(74, 222, 128, 0.5);
         }
 
         .nav-menu {
@@ -83,8 +76,8 @@
         }
 
         .nav-link:hover, .nav-link.active {
-            background: linear-gradient(135deg, rgba(239, 68, 68, 0.2), rgba(220, 38, 38, 0.1));
-            color: #ef4444;
+            background: linear-gradient(135deg, rgba(74, 222, 128, 0.2), rgba(34, 197, 94, 0.1));
+            color: #4ade80;
             transform: translateX(5px);
         }
 
@@ -97,13 +90,13 @@
         /* Main Content */
         .main-content {
             flex: 1;
-            margin-left: 300px;
+            margin-left: 280px;
             padding: 2rem;
         }
 
         .header {
             display: flex;
-            justify-content: space-between;
+            justify-content: between;
             align-items: center;
             margin-bottom: 2rem;
             background: rgba(255, 255, 255, 0.05);
@@ -116,7 +109,7 @@
         .welcome-text h1 {
             font-size: 2.5rem;
             margin-bottom: 0.5rem;
-            background: linear-gradient(135deg, #ef4444, #dc2626);
+            background: linear-gradient(135deg, #4ade80, #22c55e);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
@@ -145,13 +138,13 @@
         }
 
         .btn-primary {
-            background: linear-gradient(135deg, #ef4444, #dc2626);
+            background: linear-gradient(135deg, #4ade80, #22c55e);
             color: white;
         }
 
         .btn-primary:hover {
             transform: translateY(-2px);
-            box-shadow: 0 10px 25px rgba(239, 68, 68, 0.3);
+            box-shadow: 0 10px 25px rgba(74, 222, 128, 0.3);
         }
 
         .btn-secondary {
@@ -164,10 +157,10 @@
             background: rgba(255, 255, 255, 0.2);
         }
 
-        /* Stats Grid */
+        /* Stats Cards */
         .stats-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
             gap: 1.5rem;
             margin-bottom: 2rem;
         }
@@ -190,7 +183,7 @@
             left: -100%;
             width: 100%;
             height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(239, 68, 68, 0.1), transparent);
+            background: linear-gradient(90deg, transparent, rgba(74, 222, 128, 0.1), transparent);
             transition: left 0.5s ease;
         }
 
@@ -199,29 +192,29 @@
         }
 
         .stat-icon {
-            font-size: 2.5rem;
+            font-size: 3rem;
             margin-bottom: 1rem;
-            background: linear-gradient(135deg, #ef4444, #dc2626);
+            background: linear-gradient(135deg, #4ade80, #22c55e);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
 
         .stat-number {
-            font-size: 2rem;
+            font-size: 2.5rem;
             font-weight: bold;
             margin-bottom: 0.5rem;
-            color: #ef4444;
+            color: #4ade80;
         }
 
         .stat-label {
             color: #9ca3af;
-            font-size: 0.9rem;
+            font-size: 1rem;
         }
 
         /* Content Grid */
         .content-grid {
             display: grid;
-            grid-template-columns: 1fr 1fr;
+            grid-template-columns: 2fr 1fr;
             gap: 2rem;
             margin-bottom: 2rem;
         }
@@ -236,7 +229,7 @@
 
         .card-header {
             display: flex;
-            justify-content: space-between;
+            justify-content: between;
             align-items: center;
             margin-bottom: 1.5rem;
             padding-bottom: 1rem;
@@ -246,88 +239,87 @@
         .card-title {
             font-size: 1.5rem;
             font-weight: 600;
-            color: #ef4444;
+            color: #4ade80;
         }
 
-        /* Lists */
-        .list-item {
+        /* Recent Posts */
+        .post-item {
             display: flex;
-            justify-content: space-between;
-            align-items: center;
+            gap: 1rem;
             padding: 1rem;
             border-radius: 12px;
-            margin-bottom: 0.5rem;
+            margin-bottom: 1rem;
             background: rgba(255, 255, 255, 0.02);
             border: 1px solid rgba(255, 255, 255, 0.05);
             transition: all 0.3s ease;
         }
 
-        .list-item:hover {
+        .post-item:hover {
             background: rgba(255, 255, 255, 0.05);
             transform: translateX(5px);
         }
 
-        .list-item-info h4 {
+        .post-image {
+            width: 60px;
+            height: 60px;
+            border-radius: 8px;
+            background: linear-gradient(135deg, #4ade80, #22c55e);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+        }
+
+        .post-content h4 {
             color: #e5e7eb;
-            margin-bottom: 0.25rem;
+            margin-bottom: 0.5rem;
             font-size: 1rem;
         }
 
-        .list-item-info span {
+        .post-meta {
             color: #9ca3af;
             font-size: 0.9rem;
-        }
-
-        .list-item-actions {
             display: flex;
-            gap: 0.5rem;
+            gap: 1rem;
         }
 
-        .btn-sm {
-            padding: 0.5rem 1rem;
-            font-size: 0.8rem;
-            border-radius: 8px;
+        /* Followers List */
+        .follower-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            border-radius: 12px;
+            margin-bottom: 0.5rem;
+            background: rgba(255, 255, 255, 0.02);
+            transition: all 0.3s ease;
         }
 
-        .btn-success {
-            background: linear-gradient(135deg, #22c55e, #16a34a);
+        .follower-item:hover {
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .follower-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #4ade80, #22c55e);
+            display: flex;
+            align-items: center;
+            justify-content: center;
             color: white;
+            font-weight: bold;
         }
 
-        .btn-warning {
-            background: linear-gradient(135deg, #f59e0b, #d97706);
-            color: white;
+        .follower-info h5 {
+            color: #e5e7eb;
+            margin-bottom: 0.25rem;
         }
 
-        .btn-danger {
-            background: linear-gradient(135deg, #ef4444, #dc2626);
-            color: white;
-        }
-
-        /* Badge */
-        .badge {
-            padding: 0.25rem 0.75rem;
-            border-radius: 20px;
-            font-size: 0.8rem;
-            font-weight: 600;
-        }
-
-        .badge-success {
-            background: rgba(34, 197, 94, 0.2);
-            color: #22c55e;
-            border: 1px solid rgba(34, 197, 94, 0.3);
-        }
-
-        .badge-warning {
-            background: rgba(245, 158, 11, 0.2);
-            color: #f59e0b;
-            border: 1px solid rgba(245, 158, 11, 0.3);
-        }
-
-        .badge-danger {
-            background: rgba(239, 68, 68, 0.2);
-            color: #ef4444;
-            border: 1px solid rgba(239, 68, 68, 0.3);
+        .follower-info span {
+            color: #9ca3af;
+            font-size: 0.9rem;
         }
 
         /* Chart Container */
@@ -365,39 +357,44 @@
         <aside class="sidebar">
             <div class="logo">
                 <h2>BizNest</h2>
-                <span>Admin Panel</span>
             </div>
             
             <nav>
                 <ul class="nav-menu">
                     <li class="nav-item">
-                        <a href="{{ route('admin.dashboard') }}" class="nav-link active">
-                            <i class="fas fa-tachometer-alt"></i>
+                        <a href="{{ route('business.dashboard') }}" class="nav-link active">
+                            <i class="fas fa-chart-line"></i>
                             Dashboard
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="{{ route('admin.users') }}" class="nav-link">
-                            <i class="fas fa-users"></i>
-                            User Management
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="{{ route('admin.businesses') }}" class="nav-link">
+                        <a href="{{ route('business.profile') }}" class="nav-link">
                             <i class="fas fa-building"></i>
-                            Business Verification
+                            Business Profile
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="{{ route('admin.posts') }}" class="nav-link">
+                        <a href="{{ route('business.posts') }}" class="nav-link">
                             <i class="fas fa-newspaper"></i>
-                            Content Moderation
+                            Posts & Content
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="{{ route('admin.analytics') }}" class="nav-link">
+                        <a href="{{ route('business.analytics') }}" class="nav-link">
                             <i class="fas fa-chart-bar"></i>
                             Analytics
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{ route('business.followers') }}" class="nav-link">
+                            <i class="fas fa-users"></i>
+                            Followers
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{ route('business.settings') }}" class="nav-link">
+                            <i class="fas fa-cog"></i>
+                            Settings
                         </a>
                     </li>
                     <li class="nav-item">
@@ -424,17 +421,17 @@
             <!-- Header -->
             <header class="header">
                 <div class="welcome-text">
-                    <h1>Admin Dashboard</h1>
-                    <p>System overview and management controls for BizNest platform.</p>
+                    <h1>Business Dashboard</h1>
+                    <p>Welcome back, {{ $user->name }}! Manage your business presence on BizNest.</p>
                 </div>
                 <div class="header-actions">
-                    <a href="{{ route('admin.users') }}" class="btn btn-primary">
-                        <i class="fas fa-users-cog"></i>
-                        Manage Users
+                    <a href="{{ route('business.posts.create') }}" class="btn btn-primary">
+                        <i class="fas fa-plus"></i>
+                        Create Post
                     </a>
-                    <a href="{{ route('admin.businesses') }}" class="btn btn-secondary">
-                        <i class="fas fa-check-circle"></i>
-                        Verify Businesses
+                    <a href="{{ route('business.profile') }}" class="btn btn-secondary">
+                        <i class="fas fa-edit"></i>
+                        Edit Profile
                     </a>
                 </div>
             </header>
@@ -443,180 +440,135 @@
             <div class="stats-grid">
                 <div class="stat-card">
                     <div class="stat-icon">
-                        <i class="fas fa-users"></i>
-                    </div>
-                    <div class="stat-number">{{ number_format($stats['total_users']) }}</div>
-                    <div class="stat-label">Total Users</div>
-                </div>
-                
-                <div class="stat-card">
-                    <div class="stat-icon">
                         <i class="fas fa-building"></i>
                     </div>
-                    <div class="stat-number">{{ number_format($stats['total_businesses']) }}</div>
-                    <div class="stat-label">Businesses</div>
+                    <div class="stat-number">{{ $stats['total_businesses'] }}</div>
+                    <div class="stat-label">Business Profiles</div>
                 </div>
                 
                 <div class="stat-card">
                     <div class="stat-icon">
                         <i class="fas fa-newspaper"></i>
                     </div>
-                    <div class="stat-number">{{ number_format($stats['total_posts']) }}</div>
+                    <div class="stat-number">{{ $stats['total_posts'] }}</div>
                     <div class="stat-label">Total Posts</div>
                 </div>
                 
                 <div class="stat-card">
                     <div class="stat-icon">
-                        <i class="fas fa-clock"></i>
+                        <i class="fas fa-users"></i>
                     </div>
-                    <div class="stat-number">{{ number_format($stats['pending_verifications']) }}</div>
-                    <div class="stat-label">Pending Verifications</div>
+                    <div class="stat-number">{{ $stats['total_followers'] }}</div>
+                    <div class="stat-label">Followers</div>
                 </div>
                 
                 <div class="stat-card">
                     <div class="stat-icon">
-                        <i class="fas fa-user-check"></i>
+                        <i class="fas fa-eye"></i>
                     </div>
-                    <div class="stat-number">{{ number_format($stats['active_users']) }}</div>
-                    <div class="stat-label">Active Users</div>
-                </div>
-                
-                <div class="stat-card">
-                    <div class="stat-icon">
-                        <i class="fas fa-calendar-day"></i>
-                    </div>
-                    <div class="stat-number">{{ number_format($stats['posts_today']) }}</div>
-                    <div class="stat-label">Posts Today</div>
+                    <div class="stat-number">{{ number_format($stats['total_views']) }}</div>
+                    <div class="stat-label">Total Views</div>
                 </div>
             </div>
 
             <!-- Content Grid -->
             <div class="content-grid">
-                <!-- Pending Business Verifications -->
+                <!-- Recent Posts -->
                 <div class="card">
                     <div class="card-header">
-                        <h3 class="card-title">Pending Business Verifications</h3>
-                        <a href="{{ route('admin.businesses') }}" class="btn btn-secondary btn-sm">View All</a>
+                        <h3 class="card-title">Recent Posts</h3>
+                        <a href="{{ route('business.posts') }}" class="btn btn-secondary">View All</a>
                     </div>
                     
-                    @if($pendingBusinesses->count() > 0)
-                        @foreach($pendingBusinesses as $business)
-                            <div class="list-item">
-                                <div class="list-item-info">
-                                    <h4>{{ $business->business_name }}</h4>
-                                    <span>{{ $business->user->name }} • {{ $business->created_at->diffForHumans() }}</span>
+                    @if($recentPosts->count() > 0)
+                        @foreach($recentPosts as $post)
+                            <div class="post-item">
+                                <div class="post-image">
+                                    @if($post->image_path)
+                                        <img src="{{ asset('storage/' . $post->image_path) }}" alt="Post Image" style="width: 100%; height: 100%; object-fit: cover; border-radius: 8px;">
+                                    @else
+                                        <i class="fas fa-newspaper"></i>
+                                    @endif
                                 </div>
-                                <div class="list-item-actions">
-                                    <form method="POST" action="{{ route('admin.businesses.verify', $business) }}" style="display: inline;">
-                                        @csrf
-                                        @method('PATCH')
-                                        <button type="submit" class="btn btn-success btn-sm">
-                                            <i class="fas fa-check"></i>
-                                        </button>
-                                    </form>
-                                    <button class="btn btn-danger btn-sm" onclick="rejectBusiness({{ $business->businesses_id }})">
-                                        <i class="fas fa-times"></i>
-                                    </button>
+                                <div class="post-content">
+                                    <h4>{{ Str::limit($post->title, 50) }}</h4>
+                                    <div class="post-meta">
+                                        <span><i class="fas fa-heart"></i> {{ $post->likes->count() }}</span>
+                                        <span><i class="fas fa-comment"></i> {{ $post->comments->count() }}</span>
+                                        <span><i class="fas fa-calendar"></i> {{ $post->created_at->diffForHumans() }}</span>
+                                    </div>
                                 </div>
                             </div>
                         @endforeach
                     @else
                         <div style="text-align: center; padding: 2rem; color: #9ca3af;">
-                            <i class="fas fa-check-circle" style="font-size: 3rem; margin-bottom: 1rem; opacity: 0.5;"></i>
-                            <p>No pending business verifications!</p>
+                            <i class="fas fa-newspaper" style="font-size: 3rem; margin-bottom: 1rem; opacity: 0.5;"></i>
+                            <p>No posts yet. Create your first post to get started!</p>
+                            <a href="{{ route('business.posts.create') }}" class="btn btn-primary" style="margin-top: 1rem;">
+                                <i class="fas fa-plus"></i>
+                                Create First Post
+                            </a>
                         </div>
                     @endif
                 </div>
 
-                <!-- Recent Users -->
+                <!-- Recent Followers -->
                 <div class="card">
                     <div class="card-header">
-                        <h3 class="card-title">Recent Users</h3>
-                        <a href="{{ route('admin.users') }}" class="btn btn-secondary btn-sm">View All</a>
+                        <h3 class="card-title">Recent Followers</h3>
+                        <a href="{{ route('business.followers') }}" class="btn btn-secondary">View All</a>
                     </div>
                     
-                    @foreach($recentUsers as $recentUser)
-                        <div class="list-item">
-                            <div class="list-item-info">
-                                <h4>{{ $recentUser->name }}</h4>
-                                <span>{{ $recentUser->email }} • {{ $recentUser->created_at->diffForHumans() }}</span>
+                    @if($recentFollowers->count() > 0)
+                        @foreach($recentFollowers as $follow)
+                            <div class="follower-item">
+                                <div class="follower-avatar">
+                                    {{ strtoupper(substr($follow->follower->name, 0, 1)) }}
+                                </div>
+                                <div class="follower-info">
+                                    <h5>{{ $follow->follower->name }}</h5>
+                                    <span>{{ $follow->created_at->diffForHumans() }}</span>
+                                </div>
                             </div>
-                            <div class="list-item-actions">
-                                @if($recentUser->role)
-                                    <span class="badge badge-{{ $recentUser->role->name === 'admin' ? 'danger' : ($recentUser->role->name === 'business' ? 'warning' : 'success') }}">
-                                        {{ ucfirst($recentUser->role->name) }}
-                                    </span>
-                                @endif
-                                @if($recentUser->is_active)
-                                    <span class="badge badge-success">Active</span>
-                                @else
-                                    <span class="badge badge-danger">Inactive</span>
-                                @endif
-                            </div>
+                        @endforeach
+                    @else
+                        <div style="text-align: center; padding: 2rem; color: #9ca3af;">
+                            <i class="fas fa-users" style="font-size: 3rem; margin-bottom: 1rem; opacity: 0.5;"></i>
+                            <p>No followers yet. Start posting content to attract followers!</p>
                         </div>
-                    @endforeach
+                    @endif
                 </div>
             </div>
 
-            <!-- Recent Posts -->
+            <!-- Performance Chart -->
             <div class="card">
                 <div class="card-header">
-                    <h3 class="card-title">Recent Posts</h3>
-                    <a href="{{ route('admin.posts') }}" class="btn btn-secondary">Moderate Content</a>
-                </div>
-                
-                @if($recentPosts->count() > 0)
-                    @foreach($recentPosts as $post)
-                        <div class="list-item">
-                            <div class="list-item-info">
-                                <h4>{{ Str::limit($post->title, 60) }}</h4>
-                                <span>By {{ $post->user->name }} • {{ $post->created_at->diffForHumans() }}</span>
-                            </div>
-                            <div class="list-item-actions">
-                                <span class="badge badge-{{ $post->status === 'published' ? 'success' : ($post->status === 'draft' ? 'warning' : 'danger') }}">
-                                    {{ ucfirst($post->status) }}
-                                </span>
-                                @if($post->is_promoted)
-                                    <span class="badge badge-warning">Promoted</span>
-                                @endif
-                            </div>
-                        </div>
-                    @endforeach
-                @else
-                    <div style="text-align: center; padding: 2rem; color: #9ca3af;">
-                        <i class="fas fa-newspaper" style="font-size: 3rem; margin-bottom: 1rem; opacity: 0.5;"></i>
-                        <p>No recent posts to display.</p>
-                    </div>
-                @endif
-            </div>
-
-            <!-- Registration Trends Chart -->
-            <div class="card">
-                <div class="card-header">
-                    <h3 class="card-title">Registration Trends (Last 30 Days)</h3>
+                    <h3 class="card-title">Performance Overview (Last 30 Days)</h3>
                 </div>
                 <div class="chart-container">
-                    <canvas id="registrationChart"></canvas>
+                    <canvas id="performanceChart"></canvas>
                 </div>
             </div>
         </main>
     </div>
 
     <script>
-        // Registration Trends Chart
-        const ctx = document.getElementById('registrationChart').getContext('2d');
-        const registrationChart = new Chart(ctx, {
+        // Performance Chart
+        const ctx = document.getElementById('performanceChart').getContext('2d');
+        const performanceChart = new Chart(ctx, {
             type: 'line',
             data: {
-                labels: ['Users', 'Businesses'],
+                labels: ['Posts', 'Likes', 'Comments', 'Followers'],
                 datasets: [{
-                    label: 'New Registrations (Last 30 Days)',
+                    label: 'Last 30 Days',
                     data: [
-                        {{ $registrationTrends['users_last_30_days'] }},
-                        {{ $registrationTrends['businesses_last_30_days'] }}
+                        {{ $performanceData['posts_last_30_days'] }},
+                        {{ $performanceData['likes_last_30_days'] }},
+                        {{ $performanceData['comments_last_30_days'] }},
+                        {{ $performanceData['followers_last_30_days'] }}
                     ],
-                    borderColor: '#ef4444',
-                    backgroundColor: 'rgba(239, 68, 68, 0.1)',
+                    borderColor: '#4ade80',
+                    backgroundColor: 'rgba(74, 222, 128, 0.1)',
                     borderWidth: 3,
                     fill: true,
                     tension: 0.4
@@ -653,27 +605,6 @@
                 }
             }
         });
-
-        // Reject Business Function
-        function rejectBusiness(businessId) {
-            const reason = prompt('Please provide a reason for rejection:');
-            if (reason && reason.trim()) {
-                const form = document.createElement('form');
-                form.method = 'POST';
-                form.action = `/admin/businesses/${businessId}/reject`;
-                
-                const csrfToken = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content') || '{{ csrf_token() }}';
-                
-                form.innerHTML = `
-                    <input type="hidden" name="_token" value="${csrfToken}">
-                    <input type="hidden" name="_method" value="PATCH">
-                    <input type="hidden" name="reason" value="${reason}">
-                `;
-                
-                document.body.appendChild(form);
-                form.submit();
-            }
-        }
     </script>
 </body>
 </html>

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Models\Business;
 use App\Models\User;
+use App\Models\Role;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
@@ -32,7 +33,7 @@ class RegisterController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+    protected $redirectTo = '/user/dashboard';
 
     /**
      * Create a new controller instance.
@@ -71,6 +72,9 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
+        // Get customer role ID (default role)
+        $customerRole = Role::where('name', 'customer')->first();
+        
         return User::create([
             'name' => $data['name'],
             'email' => $data['email'],
@@ -79,10 +83,10 @@ class RegisterController extends Controller
             'nearest_city' => $data['nearest_city'],
             'mobile_number' => $data['mobile_number'],
             'id_number' => $data['id_number'],
-            'role_id' => 2, // Assuming role_id 2 corresponds to a specific role in your roles table
+            'role_id' => $customerRole ? $customerRole->id : 3, // Default to customer role
+            'is_active' => true
         ]);
     }
-
 
     protected function businessRegisterIndex()
     {
@@ -96,22 +100,22 @@ class RegisterController extends Controller
 
     public function registerBusiness(Request $request)
     {
-        //Log::info('Starting business registration process.');
-
         try {
             $this->businessValidator($request->all())->validate();
-            //Log::info('Validation passed.');
+
+            // Get business role ID
+            $businessRole = Role::where('name', 'business')->first();
 
             $user = User::create([
-                'name' => $request->owner_name, // Ensure the form field name matches
-                'email' => $request->owner_email, // Ensure the form field name matches
+                'name' => $request->owner_name,
+                'email' => $request->owner_email,
                 'password' => Hash::make($request->password),
-                'mobile_number' => $request->owner_phone, // Ensure the form field name matches
+                'mobile_number' => $request->owner_phone,
                 'address' => $request->business_address,
-                'role_id' => 1, // Assuming role_id 1 corresponds to the business owner role
-                'business_reg_no' => $request->business_reg_no, // Added this field
+                'role_id' => $businessRole ? $businessRole->id : 2, // Business role
+                'business_reg_no' => $request->business_reg_no,
+                'is_active' => true
             ]);
-            //Log::info('User created successfully.', ['user_id' => $user->id]);
 
             $business = Business::create([
                 'business_name' => $request->business_name,
@@ -121,43 +125,40 @@ class RegisterController extends Controller
                 'district' => $request->district,
                 'postal' => $request->postal,
                 'category' => $request->category,
-                'province' => $request->province, // Ensure the form field name matches
+                'province' => $request->province,
                 'user_id' => $user->id,
+                'is_verified' => false, // Business needs admin verification
+                'status' => 'pending'
             ]);
-            //Log::info('Business created successfully.', ['business_id' => $business->id]);
 
             event(new Registered($user));
-            //Log::info('Registered event dispatched.');
-
             auth()->login($user);
-            //Log::info('User logged in.');
 
-            return redirect($this->redirectPath());
+            return redirect($this->redirectPath())->with('success', 'Business registration successful! Your business is pending verification.');
         } catch (\Exception $e) {
-            //Log::error('Error during business registration: ' . $e->getMessage());
-            return redirect()->back()->withErrors(['error' => 'Registration failed. Please try again.']);
+            Log::error('Error during business registration: ' . $e->getMessage());
+            return redirect()->back()->withErrors(['error' => 'Registration failed. Please try again.'])->withInput();
         }
     }
 
-protected function businessValidator(array $data)
-{
-    Log::info('Validating business registration data.', $data);
+    protected function businessValidator(array $data)
+    {
+        Log::info('Validating business registration data.', $data);
 
-    return Validator::make($data, [
-        'business_name' => ['required', 'string', 'max:255'],
-        'business_email' => ['required', 'string', 'email', 'max:255', 'unique:businesses'],
-        'business_address' => ['required', 'string', 'max:255'],
-        'business_reg_no' => ['required', 'string', 'max:255', 'unique:users'], // Changed to unique:businesses
-        'phone' => ['required', 'string', 'max:15'],
-        'district' => ['required', 'string', 'max:255'],
-        'postal' => ['required', 'string', 'max:10'],
-        'category' => ['required', 'string', 'max:255'],
-        'province' => ['required', 'string', 'max:255'],
-        'owner_name' => ['required', 'string', 'max:255'], // Changed this to match form field name
-        'owner_email' => ['required', 'string', 'email', 'max:255', 'unique:users,email'], // Changed to unique:users,email
-        'password' => ['required', 'string', 'min:8', 'confirmed'],
-        'owner_phone' => ['required', 'string', 'max:15'], // Changed this to match form field name
-    ]);
-}
-
+        return Validator::make($data, [
+            'business_name' => ['required', 'string', 'max:255'],
+            'business_email' => ['required', 'string', 'email', 'max:255', 'unique:businesses'],
+            'business_address' => ['required', 'string', 'max:255'],
+            'business_reg_no' => ['required', 'string', 'max:255', 'unique:users'], // Changed to unique:businesses
+            'phone' => ['required', 'string', 'max:15'],
+            'district' => ['required', 'string', 'max:255'],
+            'postal' => ['required', 'string', 'max:10'],
+            'category' => ['required', 'string', 'max:255'],
+            'province' => ['required', 'string', 'max:255'],
+            'owner_name' => ['required', 'string', 'max:255'], // Changed this to match form field name
+            'owner_email' => ['required', 'string', 'email', 'max:255', 'unique:users,email'], // Changed to unique:users,email
+            'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'owner_phone' => ['required', 'string', 'max:15'], // Changed this to match form field name
+        ]);
+    }
 }

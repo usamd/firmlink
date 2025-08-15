@@ -537,7 +537,7 @@
 					<span class="logo-text">BizNest</span>
 				</div>
 				<div class="nav-buttons">
-					<a href="{{ url('user/dashboard/dashboard') }}" class="nav-btn" title="Dashboard">
+					<a href="{{ url('user/dashboard') }}" class="nav-btn" title="Dashboard">
 						<i class="fas fa-tachometer-alt"></i>
 					</a>
 					<form method="POST" action="{{ route('logout') }}" style="display: inline;">
@@ -661,10 +661,163 @@
 	<script>
 		// Enhanced Chat Functionality
 		document.addEventListener('DOMContentLoaded', function() {
-			// Chat data structure
-			const chatData = {
-				'john-doe': {
-					name: 'John Doe',
+			// CSRF Token for AJAX requests
+			const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+			let currentUserId = null;
+
+			// DOM Elements
+			const chatList = document.querySelector('.chat-list');
+			const chatHeader = document.querySelector('.chat-header');
+			const chatMessages = document.querySelector('.chat-messages');
+			const messageInput = document.querySelector('.message-input');
+			const sendButton = document.querySelector('.send-button');
+			const searchInput = document.querySelector('.search-input');
+
+			// Load users from the server
+			async function loadUsers() {
+				try {
+					const response = await fetch('/chat/users');
+					const data = await response.json();
+					
+					if (data.status === 'success') {
+						renderUsers(data.users);
+						// Load first user's messages by default
+						if (data.users.length > 0) {
+							loadMessages(data.users[0].id);
+						}
+					}
+				} catch (error) {
+					console.error('Error loading users:', error);
+				}
+			}
+
+			// Render users in the sidebar
+			function renderUsers(users) {
+				chatList.innerHTML = '';
+				users.forEach(user => {
+					const userElement = document.createElement('div');
+					userElement.className = 'chat-item';
+					userElement.dataset.userId = user.id;
+					userElement.innerHTML = `
+						<div class="chat-avatar">${user.name.charAt(0).toUpperCase()}</div>
+						<div class="chat-info">
+							<div class="chat-name">${user.name}</div>
+							<div class="chat-preview">${user.email}</div>
+						</div>
+						<div class="chat-time">${user.is_online ? 'Online' : user.last_seen}</div>
+					`;
+
+					userElement.addEventListener('click', () => {
+						document.querySelectorAll('.chat-item').forEach(item => item.classList.remove('active'));
+						userElement.classList.add('active');
+						loadMessages(user.id);
+					});
+
+					chatList.appendChild(userElement);
+				});
+
+				// Activate first user by default
+				if (users.length > 0) {
+					chatList.firstElementChild?.classList.add('active');
+				}
+			}
+
+			// Load messages for a specific user
+			async function loadMessages(userId) {
+				if (!userId) return;
+				
+				currentUserId = userId;
+				try {
+					const response = await fetch(`/chat/messages/${userId}`);
+					const messages = await response.json();
+					renderMessages(messages);
+
+					// Update chat header with user info
+					const userElement = document.querySelector(`.chat-item[data-user-id="${userId}"]`);
+					if (userElement) {
+						const userName = userElement.querySelector('.chat-name').textContent;
+						document.querySelector('.chat-title').textContent = userName;
+					}
+				} catch (error) {
+					console.error('Error loading messages:', error);
+				}
+			}
+
+			// Render messages in the chat area
+			function renderMessages(messages) {
+				chatMessages.innerHTML = '';
+				messages.forEach(message => {
+					const messageElement = document.createElement('div');
+					messageElement.className = `message ${message.sender_id === {{ auth()->id() }} ? 'sent' : 'received'}`;
+					
+					const time = new Date(message.created_at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+					
+					messageElement.innerHTML = `
+						<div class="message-content">${message.message}</div>
+						<div class="message-time">${time}</div>
+					`;
+					
+					chatMessages.appendChild(messageElement);
+				});
+
+				// Scroll to bottom
+				scrollToBottom();
+			}
+
+			// Send a new message
+			async function sendMessage() {
+				const message = messageInput.value.trim();
+				if (!message || !currentUserId) return;
+
+				try {
+					const response = await fetch('/chat/send', {
+						method: 'POST',
+						headers: {
+							'Content-Type': 'application/json',
+							'X-CSRF-TOKEN': csrfToken,
+							'Accept': 'application/json'
+						},
+						body: JSON.stringify({
+							receiver_id: currentUserId,
+							message: message
+						})
+					});
+
+					if (response.ok) {
+						messageInput.value = '';
+						loadMessages(currentUserId); // Reload messages to show the new one
+					}
+				} catch (error) {
+					console.error('Error sending message:', error);
+				}
+			}
+
+			// Helper function to scroll chat to bottom
+			function scrollToBottom() {
+				chatMessages.scrollTop = chatMessages.scrollHeight;
+			}
+
+			// Event Listeners
+			sendButton.addEventListener('click', sendMessage);
+			
+			messageInput.addEventListener('keypress', (e) => {
+				if (e.key === 'Enter') {
+					e.preventDefault();
+					sendMessage();
+				}
+			});
+
+			// Search functionality
+			searchInput.addEventListener('input', (e) => {
+				const searchTerm = e.target.value.toLowerCase();
+				document.querySelectorAll('.chat-item').forEach(item => {
+					const userName = item.querySelector('.chat-name').textContent.toLowerCase();
+					item.style.display = userName.includes(searchTerm) ? 'flex' : 'none';
+				});
+			});
+
+			// Initialize chat
+			loadUsers();
 					avatar: 'JD',
 					status: 'Online',
 					messages: [

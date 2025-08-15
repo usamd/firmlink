@@ -14,19 +14,19 @@ class BusinessesTableSeeder extends Seeder
     {
         DB::table('businesses')->insert([
             [
-                'businesses_name' => 'Tech Solutions Inc.',
+                'business_name' => 'Tech Solutions Inc.',
                 'user_id' => 1, // Assuming the user with ID 1 exists
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
             [
-                'businesses_name' => 'Creative Designs Co.',
+                'business_name' => 'Creative Designs Co.',
                 'user_id' => 2, // Assuming the user with ID 2 exists
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
             [
-                'businesses_name' => 'Global Logistics',
+                'business_name' => 'Global Logistics',
                 'user_id' => 3, // Assuming the user with ID 3 exists
                 'created_at' => now(),
                 'updated_at' => now(),
