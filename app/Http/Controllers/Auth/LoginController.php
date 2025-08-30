@@ -54,6 +54,26 @@ class LoginController extends Controller
     }
 
     /**
+     * The user has been authenticated.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  mixed  $user
+     * @return mixed
+     */
+    protected function authenticated(Request $request, $user)
+    {
+        // Check user role and redirect accordingly
+        if ($user->hasRole('admin')) {
+            return redirect()->route('admin.dashboard');
+        } elseif ($user->hasRole('business')) {
+            return redirect()->route('business.dashboard');
+        }
+        
+        // Default redirect for customers
+        return redirect()->route('user.dashboard');
+    }
+
+    /**
      * Handle a login request to the application.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -80,15 +100,7 @@ class LoginController extends Controller
                 $request->session()->put('auth.password_confirmed_at', time());
             }
 
-            // Always log in the user regardless of role
-            $request->session()->regenerate();
-            
-            // Set a default redirect path (can be overridden by intended URL)
-            $redirectTo = $request->session()->pull('url.intended', '/user/dashboard');
-            
-            return $request->wantsJson()
-                        ? new JsonResponse([], 204)
-                        : redirect()->intended($redirectTo);
+            return $this->sendLoginResponse($request);
         }
 
         // If the login attempt was unsuccessful we will increment the number of attempts
@@ -107,11 +119,36 @@ class LoginController extends Controller
      */
     public function logout(Request $request)
     {
+        // Get the current path before logging out
+        $redirectTo = $request->headers->get('referer');
+        
+        // Logout the user
         Auth::logout();
 
+        // Invalidate the session
         $request->session()->invalidate();
         $request->session()->regenerateToken();
-
-        return redirect('/')->with('success', 'You have been logged out successfully.');
+        
+        // If the request is from an AJAX call, return a JSON response
+        if ($request->expectsJson()) {
+            return response()->json(['redirect' => url('/')]);
+        }
+        
+        // If we have a valid referrer and it's not the login page
+        if ($redirectTo && $redirectTo !== route('login')) {
+            // Check if it was an admin page
+            if (str_contains($redirectTo, '/admin/')) {
+                return redirect()->route('login')
+                    ->with('success', 'You have been logged out successfully.');
+            }
+            
+            // For other pages, redirect back
+            return redirect($redirectTo)
+                ->with('success', 'You have been logged out successfully.');
+        }
+        
+        // Default redirect to home
+        return redirect('/')
+            ->with('success', 'You have been logged out successfully.');
     }
 }

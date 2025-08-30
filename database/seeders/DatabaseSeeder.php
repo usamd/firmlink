@@ -27,6 +27,7 @@ class DatabaseSeeder extends Seeder
         $this->call(BusinessesTableSeeder::class);
         $this->call(ChatSeeder::class);
         $this->call(ProductTableSeeder::class);
+        $this->call(CategoriesTableSeeder::class);
         
         $this->command->info('🎉 All seeders completed successfully!');
         $this->command->info('✅ Test Users Created:');

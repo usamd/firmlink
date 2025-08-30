@@ -418,7 +418,7 @@
 			<div class="auth-right">
 				<div class="hero-image">
 					<div class="image-container mirror-effect">
-						<img src="{{ asset('assest/IMG-20240607-WA0014 .jpg') }}" alt="Business professionals" class="hero-img">
+						<img src="{{ asset('assest/j1.jpg') }}" alt="Business professionals" class="hero-img">
 					</div>
 				</div>
 				

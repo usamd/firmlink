@@ -17,6 +17,18 @@ use App\Http\Controllers\AdminDashboardController;
 use App\Http\Controllers\BusinessDashboardController;
 use Illuminate\Support\Facades\Route;
 
+// Search Routes
+Route::match(['get', 'post'], '/search', [\App\Http\Controllers\SearchController::class, 'index'])->name('search.businesses');
+
+// Business Routes
+Route::get('/businesses/{business}', [\App\Http\Controllers\BusinessController::class, 'show'])->name('business.show');
+
+// Save Business Routes - Protected by auth middleware
+Route::middleware(['auth'])->group(function () {
+    Route::post('/businesses/{business}/save', [\App\Http\Controllers\SavedBusinessController::class, 'save'])->name('businesses.save');
+    Route::post('/businesses/{business}/unsave', [\App\Http\Controllers\SavedBusinessController::class, 'unsave'])->name('businesses.unsave');
+});
+
 Route::get('/', function () {
     return view('LandPage');
 });
@@ -147,7 +159,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
     Route::delete('/posts/{post}/force-delete', [PostController::class, 'adminForceDeletePost'])->name('posts.force-delete');
     
     // System Statistics
-    Route::get('/dashboard', [PostController::class, 'adminDashboard'])->name('dashboard');
+    Route::get('/dashboard', [AdminDashboardController::class, 'index'])->name('dashboard');
     Route::get('/analytics', [PostController::class, 'adminAnalytics'])->name('analytics');
 });
 
@@ -177,7 +189,7 @@ Route::controller(MessageController::class)->group(function(){
 });
 
 // Admin routes - Middleware commented out for unrestricted access
-// Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () {
+//Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () {
 Route::prefix('admin')->name('admin.')->group([], function () {
     Route::get('/dashboard', [AdminDashboardController::class, 'index'])->name('dashboard');
     Route::get('/users', [AdminDashboardController::class, 'users'])->name('users');
@@ -198,9 +210,8 @@ Route::prefix('admin')->name('admin.')->group([], function () {
     Route::patch('/posts/{post}/update-status', [AdminDashboardController::class, 'updatePostStatus'])->name('posts.update-status');
 });
 
-// Business routes - Middleware commented out for unrestricted access
-// Route::middleware(['auth'])->prefix('business')->name('business.')->group(function () {
-Route::prefix('business')->name('business.')->group([], function () {
+// Business routes
+Route::prefix('business')->name('business.')->middleware(['auth', 'verified'])->group(function () {
     Route::get('/dashboard', [BusinessDashboardController::class, 'index'])->name('dashboard');
     Route::get('/profile', [BusinessDashboardController::class, 'profile'])->name('profile');
     Route::get('/analytics', [BusinessDashboardController::class, 'analytics'])->name('analytics');
@@ -214,13 +225,13 @@ Route::prefix('business')->name('business.')->group([], function () {
 });
 
 // API routes for AJAX requests - Middleware commented out for unrestricted access
-// Route::prefix('api')->middleware('auth')->group(function () {
 Route::prefix('api')->group(function () {
     Route::get('/dashboard-stats', [DashboardController::class, 'getStats']);
     Route::get('/recent-activity', [DashboardController::class, 'getRecentActivity']);
     Route::get('/recent-messages', [DashboardController::class, 'getRecentMessages']);
     Route::post('/upload-image', [DashboardController::class, 'uploadImage']);
 });
+
 
 Route::get('/messagedashboard', function () {
     return view('messageDashboard');

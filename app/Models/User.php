@@ -34,6 +34,13 @@ class User extends Authenticatable
     ];
 
     /**
+     * The relationships that should always be loaded.
+     *
+     * @var array
+     */
+    protected $with = ['role'];
+
+    /**
      * The attributes that should be hidden for serialization.
      */
     protected $hidden = [
@@ -83,9 +90,17 @@ class User extends Authenticatable
         return $this->hasMany(Notification::class);
     }
 
-    public function businesses(): HasMany
+    public function businesses()
     {
-        return $this->hasMany(Business::class);
+        return $this->hasMany(Business::class, 'user_id');
+    }
+
+    /**
+     * Get all of the saved businesses for the user.
+     */
+    public function savedBusinesses()
+    {
+        return $this->hasMany(SavedBusiness::class);
     }
 
     // Following relationships

@@ -407,13 +407,19 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <form method="POST" action="{{ route('logout') }}" style="margin: 0;">
+                        <a href="{{ route('logout') }}" class="nav-link" id="admin-logout-btn">
+                            <i class="fas fa-sign-out-alt"></i>
+                            Logout
+                        </a>
+                        <form id="admin-logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                             @csrf
-                            <button type="submit" class="nav-link" style="background: none; border: none; width: 100%; text-align: left;">
-                                <i class="fas fa-sign-out-alt"></i>
-                                Logout
-                            </button>
                         </form>
+                        <script>
+                            document.getElementById('admin-logout-btn').addEventListener('click', function(e) {
+                                e.preventDefault();
+                                document.getElementById('admin-logout-form').submit();
+                            });
+                        </script>
                     </li>
                 </ul>
             </nav>

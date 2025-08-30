@@ -48,21 +48,27 @@
 					
 					<!-- Search Form -->
 					<div class="search-container">
-						<form class="search-form" action="search" method="get">
+						<form class="search-form" action="{{ route('search.businesses') }}" method="get">
+                            @csrf
 							<div class="search-input-group">
 								<i class="fas fa-search search-icon"></i>
-								<input type="text" placeholder="Search businesses, services..." name="search" class="search-input">
+								<input type="text" 
+                                       placeholder="Search businesses, services..." 
+                                       name="query" 
+                                       class="search-input"
+                                       value="{{ old('query') }}"
+                                       required>
 							</div>
 							<div class="location-select">
 								<i class="fas fa-map-marker-alt location-icon"></i>
-								<select name="location" class="location-dropdown">
-									<option value="all">All Locations</option>
-									<option value="colombo">Colombo</option>
-									<option value="kandy">Kandy</option>
-									<option value="galle">Galle</option>
-									<option value="jaffna">Jaffna</option>
-									<option value="polonnaruwa">Polonnaruwa</option>
-									<option value="ratnapura">Ratnapura</option>
+								<select name="location" class="location-dropdown" required>
+									<option value="">Select Location</option>
+									<option value="Colombo">Colombo</option>
+									<option value="Kandy">Kandy</option>
+									<option value="Galle">Galle</option>
+									<option value="Jaffna">Jaffna</option>
+									<option value="Polonnaruwa">Polonnaruwa</option>
+									<option value="Ratnapura">Ratnapura</option>
 								</select>
 							</div>
 							<button type="submit" class="search-btn">
@@ -75,7 +81,7 @@
 				
 				<div class="hero-image">
 					<div class="image-container mirror-effect">
-						<img src="{{ asset('assest/IMG-20240607-WA0014 .jpg') }}" alt="Business professionals" class="hero-img">
+						<img src="{{ asset('assest/new.jpg') }}" alt="Business professionals" class="hero-img">
 						<div class="mirror-reflection"></div>
 					</div>
 				</div>
@@ -106,7 +112,7 @@
 				<div class="stat-icon">
 					<i class="fas fa-map-marker-alt"></i>
 				</div>
-				<div class="stat-number">25</div>
+				<div class="stat-number">20</div>
 				<div class="stat-label">Districts Covered</div>
 			</div>
 			
@@ -191,7 +197,7 @@
 			<div class="featured-grid">
 				<div class="featured-card mirror-card">
 					<div class="featured-image">
-						<img src="{{ asset('Land Page/j1.jpg') }}" alt="Featured Business 1">
+						<img src="{{ asset('assest/elite.gif') }}" alt="Featured Business 1">
 						<div class="featured-badge">Premium</div>
 					</div>
 					<div class="featured-content">
@@ -207,7 +213,7 @@
 				
 				<div class="featured-card mirror-card">
 					<div class="featured-image">
-						<img src="{{ asset('Land Page/j2.jpg') }}" alt="Featured Business 2">
+						<img src="{{ asset('assest/tech.jpg') }}" alt="Featured Business 2">
 						<div class="featured-badge">Trending</div>
 					</div>
 					<div class="featured-content">
@@ -239,7 +245,7 @@
 			<div class="ads-grid">
 				<div class="ad-card mirror-card">
 					<div class="ad-image">
-						<img src="{{ asset('Land Page/IMG-20240607-WA0015.jpg') }}" alt="Business Advertisement">
+						<img src="{{ asset('assest/gos.jpg') }}" alt="Business Advertisement">
 						<div class="ad-overlay">
 							<div class="ad-badge">Special Offer</div>
 						</div>
@@ -258,7 +264,7 @@
 				
 				<div class="ad-card mirror-card">
 					<div class="ad-image">
-						<img src="{{ asset('Land Page/j1.jpg') }}" alt="Restaurant Advertisement">
+						<img src="{{ asset('assest/spice.png') }}" alt="Restaurant Advertisement">
 						<div class="ad-overlay">
 							<div class="ad-badge">New Menu</div>
 						</div>
@@ -277,7 +283,7 @@
 				
 				<div class="ad-card mirror-card">
 					<div class="ad-image">
-						<img src="{{ asset('Land Page/j2.jpg') }}" alt="Service Advertisement">
+						<img src="{{ asset('assest/web.jpg') }}" alt="Service Advertisement">
 						<div class="ad-overlay">
 							<div class="ad-badge">Premium Service</div>
 						</div>
@@ -349,7 +355,7 @@
 								</div>
 							</div>
 							<div class="testimonial-author">
-								<img src="{{ asset('Land Page/c1.jpg') }}" alt="Customer">
+								<img src="{{ asset('assest/c1.jpg') }}" alt="Customer">
 								<div class="author-info">
 									<h4>Priya Sharma</h4>
 									<span>Marketing Professional</span>
@@ -374,7 +380,7 @@
 								</div>
 							</div>
 							<div class="testimonial-author">
-								<img src="{{ asset('Land Page/c2.jpg') }}" alt="Business Owner">
+								<img src="{{ asset('assest/c2.jpg') }}" alt="Business Owner">
 								<div class="author-info">
 									<h4>Rajesh Fernando</h4>
 									<span>Restaurant Owner</span>
@@ -399,7 +405,7 @@
 								</div>
 							</div>
 							<div class="testimonial-author">
-								<img src="{{ asset('Land Page/c3.jpg') }}" alt="User">
+								<img src="{{ asset('assest/c4.jpg') }}" alt="User">
 								<div class="author-info">
 									<h4>Amara Silva</h4>
 									<span>Freelance Designer</span>

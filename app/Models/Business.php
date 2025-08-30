@@ -46,6 +46,81 @@ class Business extends Model
     }
 
     /**
+     * Get the category that owns the business
+     */
+    public function category()
+    {
+        return $this->belongsTo(Category::class, 'category_id');
+    }
+
+    /**
+     * Get the reviews for the business
+     */
+    public function reviews()
+    {
+        return $this->hasMany(Review::class);
+    }
+
+    /**
+     * Get the average rating of the business
+     */
+    public function getAverageRatingAttribute()
+    {
+        return $this->reviews()->avg('rating') ?: 0;
+    }
+
+    /**
+     * Get the number of reviews for the business
+     */
+    public function getReviewsCountAttribute()
+    {
+        return $this->reviews()->count();
+    }
+
+    /**
+     * Scope a query to search businesses
+     */
+    public function scopeSearch($query, $searchTerm)
+    {
+        return $query->where(function($q) use ($searchTerm) {
+            $q->where('business_name', 'like', "%{$searchTerm}%")
+              ->orWhere('description', 'like', "%{$searchTerm}%");
+        });
+    }
+
+    /**
+     * Scope a query to filter by location
+     */
+    public function scopeLocation($query, $location)
+    {
+        return $query->where(function($q) use ($location) {
+            $q->where('city', 'like', "%{$location}%")
+              ->orWhere('district', 'like', "%{$location}%")
+              ->orWhere('province', 'like', "%{$location}%");
+        });
+    }
+
+    /**
+     * Scope a query to filter by category
+     */
+    public function scopeCategory($query, $categoryId)
+    {
+        return $query->where('category_id', $categoryId);
+    }
+
+    /**
+     * Scope a query to filter by minimum rating
+     */
+    public function scopeMinRating($query, $rating)
+    {
+        return $query->whereHas('reviews', function($q) use ($rating) {
+            $q->select(DB::raw('AVG(rating) as avg_rating'))
+              ->groupBy('business_id')
+              ->having('avg_rating', '>=', $rating);
+        });
+    }
+
+    /**
      * Get posts for this business
      */
     public function posts()
