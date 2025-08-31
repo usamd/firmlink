@@ -15,12 +15,13 @@ class SavedBusinessController extends Controller
      * @param  \App\Models\Business  $business
      * @return \Illuminate\Http\Response
      */
-    public function save(Business $business)
+    public function save($businesses_id)
     {
         $user = Auth::user();
+        $business = Business::findOrFail($businesses_id);
         
         // Check if already saved
-        if ($user->savedBusinesses()->where('business_id', $business->id)->exists()) {
+        if ($user->savedBusinesses()->where('business_id', $businesses_id)->exists()) {
             return response()->json([
                 'success' => false,
                 'message' => 'Business already saved'
@@ -30,7 +31,7 @@ class SavedBusinessController extends Controller
         // Save the business
         $savedBusiness = new SavedBusiness([
             'user_id' => $user->id,
-            'business_id' => $business->id
+            'business_id' => $businesses_id
         ]);
         $savedBusiness->save();
         
@@ -47,14 +48,17 @@ class SavedBusinessController extends Controller
      * @param  \App\Models\Business  $business
      * @return \Illuminate\Http\Response
      */
-    public function unsave(Business $business)
+    public function unsave($businesses_id)
     {
         $user = Auth::user();
         
-        // Delete the saved business record
-        $deleted = $user->savedBusinesses()->where('business_id', $business->id)->delete();
-        
-        if ($deleted) {
+        // Find and delete the saved business
+        $savedBusiness = $user->savedBusinesses()
+            ->where('business_id', $businesses_id)
+            ->first();
+            
+        if ($savedBusiness) {
+            $savedBusiness->delete();
             return response()->json([
                 'success' => true,
                 'message' => 'Business removed from saved list',

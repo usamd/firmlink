@@ -49,7 +49,6 @@
 					<!-- Search Form -->
 					<div class="search-container">
 						<form class="search-form" action="{{ route('search.businesses') }}" method="get">
-                            @csrf
 							<div class="search-input-group">
 								<i class="fas fa-search search-icon"></i>
 								<input type="text" 
@@ -63,12 +62,12 @@
 								<i class="fas fa-map-marker-alt location-icon"></i>
 								<select name="location" class="location-dropdown" required>
 									<option value="">Select Location</option>
-									<option value="Colombo">Colombo</option>
-									<option value="Kandy">Kandy</option>
-									<option value="Galle">Galle</option>
-									<option value="Jaffna">Jaffna</option>
-									<option value="Polonnaruwa">Polonnaruwa</option>
-									<option value="Ratnapura">Ratnapura</option>
+									<option value="Colombo" {{ request('location') == 'Colombo' ? 'selected' : '' }}>Colombo</option>
+									<option value="Kandy" {{ request('location') == 'Kandy' ? 'selected' : '' }}>Kandy</option>
+									<option value="Galle" {{ request('location') == 'Galle' ? 'selected' : '' }}>Galle</option>
+									<option value="Jaffna" {{ request('location') == 'Jaffna' ? 'selected' : '' }}>Jaffna</option>
+									<option value="Polonnaruwa" {{ request('location') == 'Polonnaruwa' ? 'selected' : '' }}>Polonnaruwa</option>
+									<option value="Ratnapura" {{ request('location') == 'Ratnapura' ? 'selected' : '' }}>Ratnapura</option>
 								</select>
 							</div>
 							<button type="submit" class="search-btn">

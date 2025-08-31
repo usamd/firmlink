@@ -28,24 +28,33 @@ class SearchController extends Controller
         // Start building the query
         $businesses = Business::query();
             
-        // Apply search query if provided
-        if (!empty($query)) {
-            $businesses->where(function($q) use ($query) {
-                $q->where('business_name', 'like', "%{$query}%")
-                  ->orWhere('business_address', 'like', "%{$query}%")
-                  ->orWhere('district', 'like', "%{$query}%")
-                  ->orWhere('province', 'like', "%{$query}%");
-            });
-        }
+        // Store original location for display - don't set a default value here
+        $originalLocation = $request->input('location');
         
-        // Apply location filter if provided
-        if (!empty($location)) {
-            $businesses->where(function($q) use ($location) {
-                $q->where('district', 'like', "%{$location}%")
-                  ->orWhere('province', 'like', "%{$location}%")
-                  ->orWhere('business_address', 'like', "%{$location}%");
-            });
-        }
+        // Convert search terms to lowercase for case-insensitive search
+        $query = strtolower($query);
+        $location = strtolower($originalLocation);
+        
+        // Apply filters
+        $businesses->where(function($q) use ($query, $location) {
+            // If there's a search query
+            if (!empty($query)) {
+                $q->where(function($q) use ($query) {
+                    $q->whereRaw('LOWER(business_name) LIKE ?', ["%{$query}%"])
+                      ->orWhereRaw('LOWER(business_address) LIKE ?', ["%{$query}%"])
+                      ->orWhereRaw('LOWER(business_email) LIKE ?', ["%{$query}%"])
+                      ->orWhereRaw('REPLACE(phone, " ", "") LIKE ?', ["%" . str_replace(' ', '', $query) . "%"]);
+                });
+            }
+            
+            // Only apply location filter if a location was provided
+            if (!empty($location)) {
+                $q->where(function($q) use ($location) {
+                    $q->whereRaw('LOWER(district) LIKE ?', ["%{$location}%"])
+                      ->orWhereRaw('LOWER(province) LIKE ?', ["%{$location}%"]);
+                });
+            }
+        });
 
         // Apply category filter if provided
         if (!empty($category)) {
@@ -134,8 +143,9 @@ class SearchController extends Controller
             'request' => $request->all()
         ]);
             
-        // Paginate the results with reviews count and average rating
-        $businesses = $businesses->withCount('reviews')
+        // Eager load relationships and paginate results
+        $businesses = $businesses->with(['category', 'reviews'])
+            ->withCount('reviews')
             ->withAvg('reviews', 'rating')
             ->paginate(12)
             ->appends($request->except('page'));
@@ -143,10 +153,10 @@ class SearchController extends Controller
         // Return the view with the search results
         return view('search.results', [
             'businesses' => $businesses,
+            'query' => $request->input('query', ''), // Use original query case
+            'location' => $originalLocation, // Use original location case
             'locations' => $locations,
-            'categories' => $categories,
-            'query' => $query,
-            'location' => $location,
+            'categories' => $categories
         ]);
     }
     

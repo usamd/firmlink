@@ -117,29 +117,28 @@ class BusinessController extends Controller
     /**
      * Display the specified business
      */
-    public function show($id)
+    public function show($businesses_id)
     {
         $business = Business::with(['user', 'posts.user', 'posts.comments.user'])
-            ->findOrFail($id);
+            ->findOrFail($businesses_id);
 
         $isFollowing = false;
         if (Auth::check()) {
             $isFollowing = Follow::where('follower_id', Auth::id())
-                                ->where('followable_id', $id)
+                                ->where('followable_id', $businesses_id)
                                 ->where('followable_type', Business::class)
                                 ->where('status', 'active')
                                 ->exists();
         }
 
-        $followersCount = Follow::where('followable_id', $id)
+        $followersCount = Follow::where('followable_id', $businesses_id)
                                ->where('followable_type', Business::class)
                                ->where('status', 'active')
                                ->count();
 
-        $postsCount = Post::where('business_id', $id)->count();
+        $postsCount = Post::where('business_id', $businesses_id)->count();
 
-        return response()->json([
-            'success' => true,
+        return view('business.show', [
             'business' => $business,
             'is_following' => $isFollowing,
             'followers_count' => $followersCount,

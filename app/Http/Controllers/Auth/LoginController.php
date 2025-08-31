@@ -38,9 +38,8 @@ class LoginController extends Controller
      */
     public function __construct()
     {
-        // Commented out middleware to allow unrestricted login access
-        // $this->middleware('guest')->except('logout');
-        // $this->middleware('auth')->only('logout');
+        $this->middleware('guest')->except('logout');
+        $this->middleware('auth')->only('logout');
     }
 
     /**

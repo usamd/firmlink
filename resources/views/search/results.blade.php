@@ -1,6 +1,32 @@
-@extends('layouts.app')
+@extends('layouts.search')
 
 @section('content')
+<!-- Navigation -->
+<nav class="navbar">
+    <div class="nav-container">
+        <div class="nav-logo">
+            <img src="{{ asset('assest/Biz.png') }}" alt="BizNest Logo" class="logo">
+            <span class="logo-text">BizNest</span>
+        </div>
+        
+        <div class="nav-menu">
+            <a href="{{ url('/') }}" class="nav-link {{ request()->is('/') ? 'active' : '' }}">Home</a>
+            <a href="#categories" class="nav-link">Categories</a>
+            <a href="#trending" class="nav-link">Trending</a>
+            <a href="#about" class="nav-link">About Us</a>
+        </div>
+
+        <div class="nav-buttons">
+            @guest
+                <a href="{{ route('login') }}" class="btn-secondary">Sign In</a>
+                <a href="{{ route('register_user') }}" class="btn-primary">Sign Up</a>
+            @else
+                <a href="{{ route('user.dashboard') }}" class="btn-primary">My Dashboard</a>
+            @endguest
+        </div>
+    </div>
+</nav>
+
 <div class="search-results-page">
     <!-- Search Header -->
     <div class="search-header">
@@ -22,7 +48,7 @@
                                name="location" 
                                value="{{ request('location') }}" 
                                placeholder="City, district or address" 
-                               class="search-input"
+                               class="search-input location-input"
                                list="locationSuggestions"
                                autocomplete="off"
                                required>
@@ -32,86 +58,82 @@
                             @endforeach
                         </datalist>
                     </div>
-                    <button type="submit" class="search-btn">
+                    <button type="submit" class="btn-primary">
                         <i class="fas fa-search"></i>
                         Search
                     </button>
                 </form>
-                <button class="btn-link" id="toggle-advanced-search">
+                <button class="btn-secondary" id="toggle-advanced-search">
                     <i class="fas fa-sliders-h"></i> Advanced Search
                 </button>
             </div>
 
             <!-- Advanced Search Panel -->
             <div class="advanced-search-panel" id="advanced-search-panel" style="display: none;">
+                <h3 class="mb-4" style="color: #1e3932; font-size: 1.5rem; font-weight: 600;">Refine Your Search</h3>
                 <form action="{{ route('search.businesses') }}" method="GET" class="advanced-search-form">
                     <input type="hidden" name="query" value="{{ request('query') }}">
                     <input type="hidden" name="location" value="{{ request('location') }}">
                     
-                    <div class="row">
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label>Category</label>
-                                <select name="category" class="form-control">
-                                    <option value="">All Categories</option>
-                                    @foreach($categories as $category)
-                                        <option value="{{ $category->id }}" {{ request('category') == $category->id ? 'selected' : '' }}>
-                                            {{ $category->name }}
-                                        </option>
-                                    @endforeach
-                                </select>
+                    <div class="form-group">
+                        <label for="category">Category</label>
+                        <select name="category" id="category" class="form-control">
+                            <option value="">All Categories</option>
+                            @foreach($categories as $category)
+                                <option value="{{ $category->id }}" {{ request('category') == $category->id ? 'selected' : '' }}>
+                                    {{ $category->name }}
+                                </option>
+                            @endforeach
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="rating">Minimum Rating</label>
+                        <select name="rating" id="rating" class="form-control">
+                            <option value="">Any Rating</option>
+                            <option value="4" {{ request('rating') == '4' ? 'selected' : '' }}>4+ Stars</option>
+                            <option value="3" {{ request('rating') == '3' ? 'selected' : '' }}>3+ Stars</option>
+                            <option value="2" {{ request('rating') == '2' ? 'selected' : '' }}>2+ Stars</option>
+                            <option value="1" {{ request('rating') == '1' ? 'selected' : '' }}>1+ Star</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="sort">Sort By</label>
+                        <select name="sort" id="sort" class="form-control">
+                            <option value="relevance" {{ request('sort') == 'relevance' ? 'selected' : '' }}>Relevance</option>
+                            <option value="rating" {{ request('sort') == 'rating' ? 'selected' : '' }}>Highest Rated</option>
+                            <option value="newest" {{ request('sort') == 'newest' ? 'selected' : '' }}>Newest First</option>
+                            <option value="name_asc" {{ request('sort') == 'name_asc' ? 'selected' : '' }}>Name (A-Z)</option>
+                            <option value="name_desc" {{ request('sort') == 'name_desc' ? 'selected' : '' }}>Name (Z-A)</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Features</label>
+                        <div class="feature-options">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="feature1" name="features[]" value="wifi" {{ in_array('wifi', request('features', [])) ? 'checked' : '' }}>
+                                <label class="form-check-label" for="feature1">WiFi</label>
                             </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label>Minimum Rating</label>
-                                <select name="rating" class="form-control">
-                                    <option value="">Any Rating</option>
-                                    <option value="4" {{ request('rating') == '4' ? 'selected' : '' }}>4+ Stars</option>
-                                    <option value="3" {{ request('rating') == '3' ? 'selected' : '' }}>3+ Stars</option>
-                                    <option value="2" {{ request('rating') == '2' ? 'selected' : '' }}>2+ Stars</option>
-                                    <option value="1" {{ request('rating') == '1' ? 'selected' : '' }}>1+ Star</option>
-                                </select>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="feature2" name="features[]" value="parking" {{ in_array('parking', request('features', [])) ? 'checked' : '' }}>
+                                <label class="form-check-label" for="feature2">Parking</label>
                             </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label>Sort By</label>
-                                <select name="sort" class="form-control">
-                                    <option value="relevance" {{ request('sort') == 'relevance' ? 'selected' : '' }}>Relevance</option>
-                                    <option value="rating" {{ request('sort') == 'rating' ? 'selected' : '' }}>Highest Rated</option>
-                                    <option value="newest" {{ request('sort') == 'newest' ? 'selected' : '' }}>Newest First</option>
-                                    <option value="name_asc" {{ request('sort') == 'name_asc' ? 'selected' : '' }}>Name (A-Z)</option>
-                                    <option value="name_desc" {{ request('sort') == 'name_desc' ? 'selected' : '' }}>Name (Z-A)</option>
-                                </select>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="feature3" name="features[]" value="delivery" {{ in_array('delivery', request('features', [])) ? 'checked' : '' }}>
+                                <label class="form-check-label" for="feature3">Delivery</label>
                             </div>
                         </div>
                     </div>
                     
-                    <div class="row mt-3">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label>Features</label>
-                                <div class="feature-options">
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="checkbox" id="feature1" name="features[]" value="wifi" {{ in_array('wifi', request('features', [])) ? 'checked' : '' }}>
-                                        <label class="form-check-label" for="feature1">WiFi</label>
-                                    </div>
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="checkbox" id="feature2" name="features[]" value="parking" {{ in_array('parking', request('features', [])) ? 'checked' : '' }}>
-                                        <label class="form-check-label" for="feature2">Parking</label>
-                                    </div>
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="checkbox" id="feature3" name="features[]" value="delivery" {{ in_array('delivery', request('features', [])) ? 'checked' : '' }}>
-                                        <label class="form-check-label" for="feature3">Delivery</label>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-6 text-right">
-                            <button type="submit" class="btn btn-primary">Apply Filters</button>
-                            <a href="{{ route('search.businesses') }}?query={{ request('query') }}&location={{ request('location') }}" class="btn btn-outline-secondary">Reset</a>
-                        </div>
+                    <div class="form-actions">
+                        <a href="{{ route('search.businesses') }}?query={{ request('query') }}&location={{ request('location') }}" class="btn-secondary" style="text-decoration: none; text-align: center;">
+                            Reset
+                        </a>
+                        <button type="submit" class="btn-primary">
+                            Apply Filters
+                        </button>
                     </div>
                 </form>
             </div>
@@ -129,9 +151,15 @@
                             {{ $businesses->total() }} results found 
                             @if(!empty($query))
                                 for "{{ $query }}"
-                            @endif
-                            @if(!empty($location))
-                                in {{ $location }}
+                                @if($businesses->isNotEmpty() && !empty($businesses->first()->district))
+                                    in "{{ $businesses->first()->district }}"
+                                @elseif(!empty($location))
+                                    <!-- in "{{ $location }}" -->
+                                @endif
+                            @elseif($businesses->isNotEmpty() && !empty($businesses->first()->district))
+                                in "{{ $businesses->first()->district }}"
+                            @elseif(!empty($location))
+                                <!-- in "{{ $location }}" -->
                             @endif
                         </h4>
                     </div>
@@ -198,7 +226,7 @@
                                             
                                             @if($business->category)
                                                 <div class="business-category">
-                                                    <i class="fas fa-tag"></i> {{ $business->category->name }}
+                                                    <i class="fas fa-tag"></i> {{ $business->category }}
                                                 </div>
                                             @endif
                                             
@@ -249,7 +277,7 @@
                                             </div>
                                             
                                             <div class="mt-3 d-flex">
-                                                <a href="{{ route('business.show', $business->slug ?? $business->id) }}" class="btn btn-outline-primary btn-sm mr-2">
+                                                <a href="{{ route('business.show', $business->businesses_id) }}" class="btn btn-outline-primary btn-sm mr-2">
                                                     <i class="fas fa-eye"></i> View Details
                                                 </a>
                                                 @auth
@@ -268,16 +296,16 @@
                                                         <i class="fas fa-share-alt"></i> Share
                                                     </button>
                                                     <div class="dropdown-menu" aria-labelledby="shareDropdown{{ $business->id }}">
-                                                        <a class="dropdown-item" href="#" onclick="shareOnSocial('facebook', '{{ route('business.show', $business->slug ?? $business->id) }}')">
+                                                        <a class="dropdown-item" href="#" onclick="shareOnSocial('facebook', '{{ route('business.show', $business->businesses_id) }}')">
                                                             <i class="fab fa-facebook-f mr-2"></i> Facebook
                                                         </a>
-                                                        <a class="dropdown-item" href="#" onclick="shareOnSocial('twitter', '{{ route('business.show', $business->slug ?? $business->id) }}')">
+                                                        <a class="dropdown-item" href="#" onclick="shareOnSocial('twitter', '{{ route('business.show', $business->businesses_id) }}')">
                                                             <i class="fab fa-twitter mr-2"></i> Twitter
                                                         </a>
-                                                        <a class="dropdown-item" href="#" onclick="shareOnSocial('linkedin', '{{ route('business.show', $business->slug ?? $business->id) }}')">
+                                                        <a class="dropdown-item" href="#" onclick="shareOnSocial('linkedin', '{{ route('business.show', $business->businesses_id) }}')">
                                                             <i class="fab fa-linkedin-in mr-2"></i> LinkedIn
                                                         </a>
-                                                        <a class="dropdown-item" href="#" onclick="copyToClipboard('{{ route('business.show', $business->slug ?? $business->id) }}')">
+                                                        <a class="dropdown-item" href="#" onclick="copyToClipboard('{{ route('business.show', $business->businesses_id) }}')">
                                                             <i class="fas fa-link mr-2"></i> Copy Link
                                                         </a>
                                                     </div>
@@ -303,20 +331,23 @@
                     @endif
                 </div>
                 
-                <!-- Map View -->
-                <div class="col-lg-4">
-                    <div class="sticky-top" style="top: 20px;">
-                        <div class="card mb-4">
-                            <div class="card-header bg-primary text-white">
-                                <h5 class="mb-0">Map View</h5>
+                <!-- Map and Search Summary Row -->
+                <div class="row mt-4">
+                    <!-- Map View (Left Side) -->
+                    <div class="col-lg-8">
+                        <div class="card h-100">
+                            <div class="card text-white mb-0" style="background-color:rgb(37, 75, 65);">
+                                <h5 class="mb-2 mt-2">Map View</h5>
                             </div>
                             <div class="card-body p-0">
-                                <div id="map" style="height: 500px; width: 100%;"></div>
+                                <div id="map" style="height: 600px; width: 100%;"></div>
                             </div>
                         </div>
-                        
-                        <!-- Search Summary -->
-                        <div class="card">
+                    </div>
+                    
+                    <!-- Search Summary (Right Side) -->
+                    <div class="col-lg-4">
+                        <div class="card h-100">
                             <div class="card-header bg-light">
                                 <h6 class="mb-0">Search Summary</h6>
                             </div>
@@ -324,7 +355,8 @@
                                 <p class="mb-2"><strong>Location:</strong> {{ $location }}</p>
                                 @if(request('category'))
                                     @php
-                                        $category = \App\Models\Category::find(request('category'));
+                                        $categoryId = request('category');
+                                        $category = $categories->firstWhere('id', $categoryId);
                                     @endphp
                                     <p class="mb-2"><strong>Category:</strong> {{ $category ? $category->name : 'All Categories' }}</p>
                                 @endif
@@ -357,6 +389,394 @@
 </div>
 
 <style>
+    /* ===== Base Styles ===== */
+    :root {
+        --primary-color: #1a5d4a;
+        --primary-dark: #0f4c3a;
+        --text-color: #1a2e1a;
+        --white: #ffffff;
+        --transition: all 0.3s ease;
+    }
+
+    /* ===== Navigation Styles ===== */
+    .navbar {
+        background-color: white;
+        padding: 1rem 0;
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+    
+    .back-to-home {
+        position: fixed;
+        top: 20px;
+        left: 20px;
+        color: white;
+        text-decoration: none;
+        font-weight: 500;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        background: #1e3932;
+        padding: 10px 15px;
+        border-radius: 25px;
+        z-index: 1001;
+        transition: all 0.3s ease;
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+    
+    .back-to-home:hover {
+        background: #2c5530;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+    }
+    
+    .nav-container {
+        max-width: 1400px;
+        margin: 0 auto;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1rem 1.5rem;
+        position: relative;
+        flex-wrap: wrap;
+        gap: 1rem;
+    }
+    
+    @media (max-width: 1200px) {
+        .nav-container {
+            padding: 0.75rem 1rem;
+        }
+        
+        .nav-search {
+            order: 1;
+            flex: 1 1 100%;
+            margin: 0.5rem 0;
+            max-width: 100%;
+        }
+        
+        .nav-menu {
+            margin: 0.5rem 0;
+            width: 100%;
+            justify-content: center;
+            order: 2;
+        }
+        
+        .nav-buttons {
+            order: 0;
+            margin-left: auto;
+        }
+    }
+    
+    @media (max-width: 768px) {
+        .back-to-home {
+            top: 10px;
+            left: 10px;
+            padding: 8px 12px;
+            font-size: 0.9rem;
+        }
+        
+        .nav-logo .logo-text {
+            font-size: 1.2rem;
+        }
+        
+        .nav-menu {
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+        
+        .search-form {
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+        
+        .search-btn {
+            width: 100%;
+            justify-content: center;
+            padding: 0.6rem 1rem;
+        }
+    }
+    
+    @media (max-width: 480px) {
+        .nav-menu {
+            font-size: 0.9rem;
+            gap: 0.75rem;
+        }
+        
+        .nav-buttons {
+            gap: 0.5rem;
+        }
+        
+        .btn-primary, .btn-secondary {
+            padding: 0.4rem 0.8rem;
+            font-size: 0.85rem;
+        }
+    }
+    
+    .nav-logo {
+        display: flex;
+        align-items: center;
+        text-decoration: none;
+    }
+    
+    .logo {
+        height: 36px;
+        width: auto;
+        margin-right: 10px;
+    }
+    
+    .logo-text {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: var(--primary-color);
+    }
+    
+    .nav-menu {
+        display: flex;
+        gap: 2rem;
+        margin: 0 2rem;
+    }
+    
+    .nav-search {
+        flex: 1;
+        max-width: 600px;
+        margin: 0 2rem;
+    }
+    
+    .search-form {
+        display: flex;
+        gap: 0.5rem;
+        width: 100%;
+    }
+    
+    .search-input-group {
+        flex: 1;
+        position: relative;
+        display: flex;
+        align-items: center;
+    }
+    
+    .search-input {
+        width: 100%;
+        padding: 0.6rem 1rem 0.6rem 2.5rem;
+        border: 1px solid #ddd;
+        border-radius: 25px;
+        font-size: 0.9rem;
+        transition: all 0.3s ease;
+    }
+    
+    .search-input:focus {
+        outline: none;
+        border-color: var(--primary-color);
+        box-shadow: 0 0 0 2px rgba(40, 167, 69, 0.2);
+    }
+    
+    .search-icon, .location-icon {
+        position: absolute;
+        left: 1rem;
+        color: #777;
+    }
+    
+    .search-btn {
+        background: var(--primary-color);
+        color: white;
+        border: none;
+        border-radius: 25px;
+        padding: 0 1.5rem;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-weight: 500;
+        transition: all 0.3s ease;
+    }
+    
+    .search-btn:hover {
+        background: #1e7e34;
+        transform: translateY(-1px);
+    }
+    
+    .nav-buttons {
+        display: flex;
+        gap: 1rem;
+        align-items: center;
+    }
+    }
+    
+    .nav-link {
+        text-decoration: none;
+        color: #333;
+        font-weight: 500;
+        transition: all 0.3s ease;
+        position: relative;
+        padding: 0.5rem 0;
+    }
+    
+    .nav-link:hover,
+    .nav-link.active {
+        color: #1e3932;
+    }
+    
+    .nav-link::after {
+        content: '';
+        position: absolute;
+        bottom: -5px;
+        left: 0;
+        width: 0;
+        height: 2px;
+        background: linear-gradient(135deg, #1e3932, #2c5530);
+        transition: width 0.3s ease;
+    }
+    
+    .nav-link:hover::after,
+    .nav-link.active::after {
+        width: 100%;
+    }
+
+    /* Navigation Buttons */
+/* Navigation Styles */
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    z-index: 1000;
+    transition: all 0.3s ease;
+}
+
+.nav-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 70px;
+}
+
+.nav-logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.logo {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+}
+
+.logo-text {
+    font-size: 24px;
+    font-weight: 700;
+    background: linear-gradient(135deg, #1e3932, #2c5530);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.nav-menu {
+    display: flex;
+    gap: 30px;
+}
+
+.nav-link {
+    text-decoration: none;
+    color: #333;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.nav-link:hover,
+.nav-link.active {
+    color: #1e3932;
+}
+
+.nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: linear-gradient(135deg, #1e3932, #2c5530);
+    transition: width 0.3s ease;
+}
+
+.nav-link:hover::after,
+.nav-link.active::after {
+    width: 100%;
+}
+
+.nav-buttons {
+    display: flex;
+    gap: 15px;
+}
+
+.btn-secondary {
+    padding: 10px 20px;
+    border: 2px solid #1e3932;
+    background: transparent;
+    color: #1e3932;
+    border-radius: 25px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    display: inline-block;
+    text-align: center;
+}
+
+.btn-secondary:hover {
+    background: #1e3932;
+    color: white;
+}
+
+.btn-primary {
+    padding: 10px 20px;
+    background: linear-gradient(135deg, #1e3932, #2c5530);
+    color: white;
+    border: none;
+    border-radius: 25px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    display: inline-block;
+    text-align: center;
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px rgba(30, 57, 50, 0.4);
+}
+
+    
+    /* Mobile Menu Toggle */
+    .mobile-menu-toggle {
+        display: none;
+        background: none;
+        border: none;
+        font-size: 1.5rem;
+        color: var(--primary-color);
+        cursor: pointer;
+        padding: 0.5rem;
+        margin-left: 1rem;
+    }
+
+    /* Content Spacing */
+    .search-results-page {
+        padding-top: 80px;
+        min-height: 100vh;
+    }
+
     /* Map Info Window Styles */
     .map-info-window {
         padding: 10px;
@@ -381,49 +801,140 @@
         padding: 4px 8px;
     }
     
-    /* Search Header */
+    /* ===== Search Header ===== */
     .search-header {
-        background: linear-gradient(135deg, #15202B 0%, #1a3a4a 100%);
-        padding: 2rem 0;
-        margin-bottom: 2rem;
+        background: linear-gradient(135deg, #1e3932 0%, #2c5530 100%);
+        padding: 4rem 0 2rem;
+        margin: 0;
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .search-header::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M54.627 0l-5.455 5.456 5.455 5.455-5.455 5.455L43.717 0l-5.455 5.455L43.717 16.37 38.26 21.82l5.455 5.457-5.455 5.455-5.455-5.455-5.456 5.455L26.95 27.277 21.493 32.73l5.455 5.457-5.455 5.455-5.455-5.455-5.456 5.455L.215 38.186 5.67 32.73.215 27.275l5.455-5.456L.215 16.37 5.67 10.91.213 5.455 5.67 0l5.456 5.455L16.583 0l5.456 5.455L27.494 0l5.456 5.455L38.405 0l5.456 5.455L49.37 0l5.257 5.257L60 5.455 54.627 0z' fill='%233a6b3f' fill-opacity='0.1' fill-rule='evenodd'/%3E%3C/svg%3E");
+        opacity: 0.5;
+        z-index: 0;
     }
     
     .search-bar-container {
-        max-width: 900px;
+        max-width: 1000px;
         margin: 0 auto;
+        padding: 0 20px;
+        position: relative;
+        z-index: 1;
     }
     
     .search-form {
         display: flex;
         gap: 10px;
         margin-bottom: 1rem;
+        background: white;
+        border-radius: 50px;
+        padding: 5px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+        position: relative;
+        overflow: hidden;
     }
     
     .search-input-group {
-        flex: 3;
+        flex: 1;
         position: relative;
+        margin: 0;
     }
     
-    .search-icon {
+    .search-icon, .location-icon {
         position: absolute;
-        left: 15px;
+        left: 18px;
         top: 50%;
         transform: translateY(-50%);
         color: #6c757d;
+        z-index: 1;
+        font-size: 1.1rem;
     }
     
-    .search-input {
+    .search-input, .location-input {
         width: 100%;
-        padding: 12px 20px 12px 45px;
-        border: 1px solid #e2e8f0;
-        border-radius: 6px;
-        font-size: 16px;
-        transition: all 0.3s;
+        padding: 15px 20px 15px 48px;
+        border: none;
+        border-radius: 50px;
+        font-size: 15px;
+        transition: all 0.3s ease;
+        background: #f8f9fa;
     }
     
-    .search-input:focus {
-        border-color: #09a509;
-        box-shadow: 0 0 0 3px rgba(9, 165, 9, 0.1);
+    .search-input:focus, .location-input:focus {
+        outline: none;
+        background: #fff;
+        box-shadow: 0 0 0 3px rgba(30, 57, 50, 0.1);
+    }
+    
+    .search-input:focus, .location-input:focus {
+        border-color: var(--primary-color);
+        box-shadow: 0 0 0 3px rgba(26, 93, 74, 0.2);
+        outline: none;
+    }
+    
+    .search-btn {
+        background: linear-gradient(135deg, #1e3932, #2c5530);
+        color: white;
+        border: none;
+        border-radius: 50px;
+        padding: 12px 28px;
+        font-weight: 600;
+        font-size: 15px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        white-space: nowrap;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 4px 15px rgba(30, 57, 50, 0.2);
+    }
+    
+    .search-btn:hover {
+        background: linear-gradient(135deg, #2c5530, #1e3932);
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(30, 57, 50, 0.3);
+    }
+    
+    .search-btn i {
+        margin-right: 8px;
+        font-size: 0.9em;
+    }
+    
+    /* Advanced Search Button */
+    #toggle-advanced-search {
+        background: transparent;
+        color: white;
+        border: 2px solid rgba(255, 255, 255, 0.3);
+        border-radius: 50px;
+        padding: 10px 20px;
+        font-weight: 500;
+        font-size: 14px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        display: inline-flex;
+        align-items: center;
+        margin: 0;
+        text-decoration: none;
+    }
+    
+    #toggle-advanced-search i {
+        margin-right: 8px;
+        font-size: 0.9em;
+    }
+    
+    #toggle-advanced-search:hover {
+        background: rgba(255, 255, 255, 0.1);
+        border-color: rgba(255, 255, 255, 0.5);
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     }
     
     .location-select {
@@ -467,13 +978,114 @@
         background-color: #078e07;
     }
     
-    /* Advanced Search */
+    /* Advanced Search Panel */
     .advanced-search-panel {
         background: white;
+        border-radius: 12px;
+        padding: 25px;
+        margin: 20px 0;
+        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+        position: relative;
+        z-index: 2;
+        animation: slideDown 0.3s ease-out;
+    }
+    
+    @keyframes slideDown {
+        from { opacity: 0; transform: translateY(-10px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+    
+    .advanced-search-form {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+        gap: 20px;
+    }
+    
+    .form-group {
+        margin-bottom: 1.25rem;
+    }
+    
+    .form-group label {
+        display: block;
+        margin-bottom: 0.5rem;
+        font-weight: 500;
+        color: #1e3932;
+        font-size: 0.9rem;
+        letter-spacing: 0.3px;
+    }
+    
+    .form-control {
+        width: 100%;
+        padding: 12px 16px;
+        border: 1px solid #e2e8f0;
         border-radius: 8px;
-        padding: 1.5rem;
-        margin-top: 1rem;
-        box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        font-size: 14px;
+        transition: all 0.3s ease;
+        background-color: #f8f9fa;
+        color: #2d3748;
+    }
+    
+    .form-control:focus {
+        border-color: #1e3932;
+        box-shadow: 0 0 0 3px rgba(30, 57, 50, 0.1);
+        outline: none;
+        background-color: #fff;
+    }
+    
+    /* Form Checkbox Styles */
+    .form-check {
+        display: flex;
+        align-items: center;
+        margin-bottom: 0.5rem;
+    }
+    
+    .form-check-input {
+        width: 18px;
+        height: 18px;
+        margin-right: 0.5rem;
+        border: 2px solid #cbd5e0;
+        border-radius: 4px;
+        appearance: none;
+        -webkit-appearance: none;
+        cursor: pointer;
+        position: relative;
+        transition: all 0.2s ease;
+    }
+    
+    .form-check-input:checked {
+        background-color: #1e3932;
+        border-color: #1e3932;
+    }
+    
+    .form-check-input:checked::after {
+        content: '✓';
+        position: absolute;
+        color: white;
+        font-size: 12px;
+        font-weight: bold;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+    }
+    
+    .form-check-label {
+        font-size: 0.9rem;
+        color: #4a5568;
+        cursor: pointer;
+    }
+    
+    .form-check-input:focus {
+        box-shadow: 0 0 0 3px rgba(30, 57, 50, 0.2);
+    }
+    
+    .form-actions {
+        grid-column: 1 / -1;
+        display: flex;
+        justify-content: flex-end;
+        gap: 15px;
+        margin-top: 10px;
+        padding-top: 15px;
+        border-top: 1px solid #edf2f7;
     }
     
     .feature-options {
@@ -496,11 +1108,13 @@
         flex-wrap: wrap;
         gap: 8px;
         align-items: center;
+        color: #2d3748;
     }
     
     .applied-filters .badge {
         padding: 5px 10px;
         font-weight: 500;
+        color: #2d3748;
     }
     
     .clear-all {
@@ -593,6 +1207,16 @@
 
 @push('scripts')
 <script>
+    // Navbar scroll effect
+    window.addEventListener('scroll', function() {
+        const navbar = document.querySelector('.navbar');
+        if (window.scrollY > 20) {
+            navbar.classList.add('scrolled');
+        } else {
+            navbar.classList.remove('scrolled');
+        }
+    });
+    
     // Toggle advanced search
     document.getElementById('toggle-advanced-search').addEventListener('click', function() {
         const panel = document.getElementById('advanced-search-panel');
@@ -661,7 +1285,7 @@
                                 </div>
                             @endif
                             <p class="mb-1 small">{{ Str::limit(strip_tags($business->description), 100) }}</p>
-                            <a href="{{ route('business.show', $business->slug ?? $business->id) }}" class="btn btn-sm btn-primary btn-block mt-2">
+                            <a href="{{ route('business.show', $business->businesses_id) }}" class="btn btn-sm btn-primary btn-block mt-2">
                                 View Details
                             </a>
                         </div>

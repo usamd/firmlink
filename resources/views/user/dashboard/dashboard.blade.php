@@ -3092,13 +3092,32 @@
 					</div>
 				</div>
 				<div class="nav-buttons">
-					<form method="POST" action="{{ route('logout') }}" style="display: inline;">
-						@csrf
-						<button type="submit" class="nav-btn logout-btn" title="Logout">
-							<i class="fas fa-sign-out-alt"></i>
-						</button>
-					</form>
-				</div>
+                    <button type="button" class="btn btn-danger btn-logout" 
+                            onclick="event.preventDefault(); document.getElementById('logout-form').submit();"
+                            title="Logout">
+                        <i class="fas fa-sign-out-alt me-1"></i> Logout
+                    </button>
+                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                        @csrf
+                    </form>
+                </div>
+                <style>
+                    .btn-logout {
+                        background-color: #dc3545;
+                        color: white;
+                        border: none;
+                        padding: 8px 15px;
+                        border-radius: 4px;
+                        cursor: pointer;
+                        display: flex;
+                        align-items: center;
+                        gap: 5px;
+                        transition: background-color 0.3s;
+                    }
+                    .btn-logout:hover {
+                        background-color: #bb2d3b;
+                    }
+                </style>
 				<div class="profile-actions">
 					<button class="profile-btn primary">
 						<i class="fas fa-edit"></i>
