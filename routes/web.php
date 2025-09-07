@@ -35,9 +35,9 @@ Route::middleware(['auth'])->group(function () {
         ->where('businesses_id', '[0-9]+');
 });
 
-Route::get('/', function () {
-    return view('LandPage');
-});
+use App\Http\Controllers\LandingPageController;
+
+Route::get('/', [LandingPageController::class, 'index']);
 
 Route::get('/menu', function () {
     return view('auth/menu');
@@ -48,8 +48,6 @@ Route::get('/cusmenu', function () {
 });
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-Route::get('register_employee', [AuthRegisterController::class, 'businessRegisterIndex'])->name('register_employee');
-Route::post('register-business', [AuthRegisterController::class, 'registerBusiness'])->name('register.business');
 Route::get('register_user', [AuthRegisterController::class, 'userRegisterIndex'])->name('register_user');
 
 // Authentication routes
@@ -60,6 +58,13 @@ Route::match(['get', 'post'], '/logout', [LoginController::class, 'logout'])->na
 
 Route::post('/register', [AuthRegisterController::class, 'register'])->name('register');
 Route::post('/register-user', [AuthRegisterController::class, 'register'])->name('register.user');
+// Business Registration Routes
+Route::get('/register-business', [AuthRegisterController::class, 'businessRegisterIndex'])->name('register.business');
+Route::post('/register-business', [AuthRegisterController::class, 'registerBusiness'])->name('register.business.submit');
+
+// Legal Pages
+Route::view('/terms', 'legal.terms')->name('terms');
+Route::view('/privacy', 'legal.privacy')->name('privacy');
 
 Route::get('about-us', [AboutUsController::class, 'AboutUsIndex'])->name('about_us');
 

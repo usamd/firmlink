@@ -9,6 +9,25 @@
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
 	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 	<link rel="stylesheet" type="text/css" href="{{ asset('Land Page/LandPage.css') }}">
+    <style>
+        /* Category Card Links */
+        .category-card-link {
+            text-decoration: none;
+            color: inherit;
+            display: block;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .category-card-link:hover .category-card {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .category-card-link:active .category-card {
+            transform: translateY(0);
+        }
+    </style>
 </head>
 <body>
 	<!-- Navigation -->
@@ -95,7 +114,7 @@
 				<div class="stat-icon">
 					<i class="fas fa-building"></i>
 				</div>
-				<div class="stat-number">25,000+</div>
+				<div class="stat-number">{{ number_format($businessCount) }}+</div>
 				<div class="stat-label">Registered Businesses</div>
 			</div>
 			
@@ -103,7 +122,7 @@
 				<div class="stat-icon">
 					<i class="fas fa-users"></i>
 				</div>
-				<div class="stat-number">150,000+</div>
+				<div class="stat-number">{{ number_format($userCount) }}+</div>
 				<div class="stat-label">Active Users</div>
 			</div>
 			
@@ -134,56 +153,52 @@
 			</div>
 			
 			<div class="categories-grid">
-				<div class="category-card mirror-card">
-					<div class="category-icon">
-						<i class="fas fa-utensils"></i>
-					</div>
-					<h3>Restaurants & Food</h3>
-					<p>2,500+ businesses</p>
-				</div>
-				
-				<div class="category-card mirror-card">
-					<div class="category-icon">
-						<i class="fas fa-shopping-bag"></i>
-					</div>
-					<h3>Retail & Shopping</h3>
-					<p>3,200+ businesses</p>
-				</div>
-				
-				<div class="category-card mirror-card">
-					<div class="category-icon">
-						<i class="fas fa-heartbeat"></i>
-					</div>
-					<h3>Healthcare</h3>
-					<p>1,800+ businesses</p>
-				</div>
-				
-				<div class="category-card mirror-card">
-					<div class="category-icon">
-						<i class="fas fa-graduation-cap"></i>
-					</div>
-					<h3>Education</h3>
-					<p>1,200+ businesses</p>
-				</div>
-				
-				<div class="category-card mirror-card">
-					<div class="category-icon">
-						<i class="fas fa-tools"></i>
-					</div>
-					<h3>Services</h3>
-					<p>4,100+ businesses</p>
-				</div>
-				
-				<div class="category-card mirror-card">
-					<div class="category-icon">
-						<i class="fas fa-car"></i>
-					</div>
-					<h3>Automotive</h3>
-					<p>900+ businesses</p>
-				</div>
-			</div>
-		</div>
-	</section>
+                @php
+                    $visibleCategories = $categories->take(6);
+                    $hiddenCategories = $categories->slice(6);
+                @endphp
+
+                @forelse($visibleCategories as $category)
+                <a href="{{ route('search.businesses', ['category' => $category->id]) }}" class="category-card-link">
+                    <div class="category-card mirror-card">
+                        <div class="category-icon">
+                            <i class="fas {{ $category->icon_class }}"></i>
+                        </div>
+                        <h3>{{ $category->name }}</h3>
+                        <p>{{ number_format($category->businesses_count) }}+ businesses</p>
+                    </div>
+                </a>
+                @empty
+                    <p>No categories found.</p>
+                @endforelse
+
+                @if($hiddenCategories->isNotEmpty())
+                    @foreach($hiddenCategories as $category)
+                    <a href="{{ route('search.businesses', ['category' => $category->id]) }}" class="category-card-link hidden-category" style="display: none;">
+                        <div class="category-card mirror-card">
+                            <div class="category-icon">
+                                <i class="fas {{ $category->icon_class }}"></i>
+                            </div>
+                            <h3>{{ $category->name }}</h3>
+                            <p>{{ number_format($category->businesses_count) }}+ businesses</p>
+                        </div>
+                    </a>
+                    @endforeach
+                @endif
+
+                @if($hiddenCategories->isNotEmpty())
+                <div class="text-center mt-4">
+                    <button id="viewMoreBtn" class="search-btn">
+                        <i class="fas fa-plus-circle"></i> View More Categories
+                    </button>
+                    <button id="viewLessBtn" class="search-btn" style="display: none;">
+                        <i class="fas fa-minus-circle"></i> Show Less
+                    </button>
+                </div>
+                @endif
+            </div>
+        </div>
+    </section>
 
 	<!-- Featured Businesses -->
 	<section class="featured-section" id="trending">
@@ -228,7 +243,7 @@
 			</div>
 			
 			<div class="browse-all">
-				<button class="btn-outline">Browse All Businesses</button>
+				<a href="{{ route('search.businesses') }}" class="btn-outline">Browse All Businesses</a>
 			</div>
 		</div>
 	</section>
@@ -589,6 +604,34 @@
 		if (statsSection) {
 			observer.observe(statsSection);
 		}
+
+        // View More Categories functionality
+        const viewMoreBtn = document.getElementById('viewMoreBtn');
+        const viewLessBtn = document.getElementById('viewLessBtn');
+        const hiddenCategories = document.querySelectorAll('.hidden-category');
+        
+        if (viewMoreBtn) {
+            viewMoreBtn.addEventListener('click', function() {
+                hiddenCategories.forEach(card => {
+                    card.style.display = 'block';
+                });
+                viewMoreBtn.style.display = 'none';
+                if (viewLessBtn) viewLessBtn.style.display = 'inline-block';
+            });
+        }
+        
+        if (viewLessBtn) {
+            viewLessBtn.addEventListener('click', function() {
+                hiddenCategories.forEach(card => {
+                    card.style.display = 'none';
+                });
+                if (viewMoreBtn) viewMoreBtn.style.display = 'inline-block';
+                viewLessBtn.style.display = 'none';
+                
+                // Scroll to categories section
+                document.querySelector('.categories-section').scrollIntoView({ behavior: 'smooth' });
+            });
+        }
 	</script>
 </body>
 </html>

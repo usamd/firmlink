@@ -19,7 +19,8 @@ class Business extends Model
         'phone',
         'district', 
         'postal', 
-        'category', 
+        'category', // This stores the category name as a string
+        'category_id', // For the relationship with categories table
         'province', 
         'user_id',
         'business_type',
@@ -36,13 +37,18 @@ class Business extends Model
         'created_at' => 'datetime',
         'updated_at' => 'datetime',
     ];
+    
+    protected $appends = ['category_name', 'category_icon'];
 
+    /**
+     * Get the user that owns the business
+     */
     /**
      * Get the user that owns the business
      */
     public function user()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'user_id', 'id');
     }
 
     /**
@@ -51,6 +57,67 @@ class Business extends Model
     public function category()
     {
         return $this->belongsTo(Category::class, 'category_id');
+    }
+
+    /**
+     * Get the category name with fallback
+     */
+    public function getCategoryNameAttribute()
+    {
+        if ($this->category_id) {
+            if ($this->relationLoaded('category') && $this->category) {
+                return $this->category->name;
+            }
+            return Category::find($this->category_id)?->name;
+        }
+        return $this->attributes['category'] ?? 'Uncategorized';
+    }
+    
+    /**
+     * Get the category icon
+     */
+    public function getCategoryIconAttribute()
+    {
+        // Map common category names to icons
+        $categoryIcons = [
+            'restaurant' => 'utensils',
+            'cafe' => 'coffee',
+            'hotel' => 'hotel',
+            'shop' => 'shopping-bag',
+            'store' => 'store',
+            'salon' => 'cut',
+            'spa' => 'spa',
+            'gym' => 'dumbbell',
+            'hospital' => 'hospital',
+            'clinic' => 'clinic-medical',
+            'pharmacy' => 'pills',
+            'school' => 'school',
+            'university' => 'university',
+            'bank' => 'university',
+            'atm' => 'money-bill-wave',
+            'gas' => 'gas-pump',
+            'parking' => 'parking',
+            'mall' => 'shopping-cart',
+            'supermarket' => 'shopping-basket',
+            'market' => 'store-alt',
+        ];
+        
+        $category = strtolower($this->category ?? '');
+        
+        // Check for exact match
+        if (isset($categoryIcons[$category])) {
+            return $categoryIcons[$category];
+        }
+        
+        // Check for partial matches
+        foreach ($categoryIcons as $key => $icon) {
+            if (str_contains($category, $key)) {
+                return $icon;
+            }
+        }
+        
+        // Default icon
+        return 'tag';
     }
 
     /**
@@ -100,13 +167,6 @@ class Business extends Model
         });
     }
 
-    /**
-     * Scope a query to filter by category
-     */
-    public function scopeCategory($query, $categoryId)
-    {
-        return $query->where('category_id', $categoryId);
-    }
 
     /**
      * Scope a query to filter by minimum rating

@@ -57,7 +57,7 @@
 			box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
 			display: grid;
 			grid-template-columns: 1fr 1fr;
-			min-height: 700px;
+			min-height: 600px;
 			overflow: hidden;
 			position: relative;
 		}
@@ -78,13 +78,17 @@
 		}
 
 		.auth-left {
-			padding: 50px 40px;
+			padding: 30px 40px;
 			display: flex;
 			flex-direction: column;
-			justify-content: center;
 			color: white;
-			max-height: 700px;
+			max-height: 95vh;
 			overflow-y: auto;
+			position: relative;
+			z-index: 10;
+			box-sizing: border-box;
+			scrollbar-width: thin;
+			scrollbar-color: rgba(255, 255, 255, 0.3) transparent;
 		}
 
 		.auth-right {
@@ -116,38 +120,48 @@
 		}
 
 		.logo-section {
-			display: flex;
-			align-items: center;
-			gap: 15px;
-			margin-bottom: 25px;
+			text-align: center;
+			margin-bottom: 30px;
+			padding: 20px 0;
+			position: relative;
+			z-index: 10;
+			top: 0;
+			left: 0;
+			right: 0;
 		}
 
 		.logo {
-			width: 50px;
-			height: 50px;
-			border-radius: 50%;
+			height: 60px;
+			margin-bottom: 10px;
+			transition: transform 0.3s ease;
+			display: block;
+			margin-left: auto;
+			margin-right: auto;
 		}
 
 		.logo-text {
 			font-size: 28px;
 			font-weight: 700;
-			background: linear-gradient(135deg, #7fb069, #588157);
-			-webkit-background-clip: text;
-			-webkit-text-fill-color: transparent;
-			background-clip: text;
+			color: #fff;
+			display: block;
+			margin-top: 10px;
+			text-shadow: 0 2px 4px rgba(0,0,0,0.2);
 		}
 
 		.auth-title {
-			font-size: 2.2rem;
+			font-size: 32px;
 			font-weight: 700;
+			color: #fff;
 			margin-bottom: 10px;
-			color: white;
+			text-align: center;
 		}
 
 		.auth-subtitle {
-			font-size: 1rem;
-			opacity: 0.9;
+			color: rgba(255, 255, 255, 0.9);
 			margin-bottom: 30px;
+			font-size: 16px;
+			text-align: center;
+			font-weight: 400;
 			line-height: 1.6;
 		}
 
@@ -371,10 +385,10 @@
 		<div class="auth-card">
 			<!-- Left Side - Signup Form -->
 			<div class="auth-left">
-				<div class="logo-section">
+				<!-- <div class="logo-section">
 					<img src="{{ asset('assest/Biz.png') }}" alt="BizNest Logo" class="logo">
 					<span class="logo-text">BizNest</span>
-				</div>
+				</div> -->
 				
 				<h1 class="auth-title">Join BizNest</h1>
 				<p class="auth-subtitle">Create your account and start connecting with Sri Lanka's premier business community today.</p>
@@ -519,7 +533,7 @@
 					</div>
 					
 					<div class="auth-links" style="margin-top: 15px;">
-						<a href="{{ route('register_employee') }}" class="auth-link">
+						<a href="{{ route('register.business') }}" class="auth-link">
 							<i class="fas fa-briefcase"></i> Register as Business Employee
 						</a>
 					</div>
@@ -530,7 +544,7 @@
 			<div class="auth-right">
 				<div class="hero-image">
 					<div class="image-container mirror-effect">
-						<img src="{{ asset('assest/IMG-20240607-WA0014 .jpg') }}" alt="Business professionals" class="hero-img">
+						<img src="{{ asset('assest/net.png') }}" alt="Business professionals" class="hero-img">
 					</div>
 				</div>
 				

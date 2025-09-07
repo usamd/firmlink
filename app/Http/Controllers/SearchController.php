@@ -25,8 +25,8 @@ class SearchController extends Controller
         $sort = $request->input('sort', 'relevance');
         $features = $request->input('features', []);
 
-        // Start building the query
-        $businesses = Business::query();
+        // Start building the query and select necessary fields
+        $businesses = Business::select('*');
             
         // Store original location for display - don't set a default value here
         $originalLocation = $request->input('location');
@@ -58,7 +58,7 @@ class SearchController extends Controller
 
         // Apply category filter if provided
         if (!empty($category)) {
-            $businesses->where('category', $category);
+            $businesses->where('category_id', $category);
         }
 
         // Apply minimum rating filter
@@ -143,12 +143,20 @@ class SearchController extends Controller
             'request' => $request->all()
         ]);
             
+        // Add debug logging
+        \Log::info('Businesses query:', ['sql' => $businesses->toSql(), 'bindings' => $businesses->getBindings()]);
+            
         // Eager load relationships and paginate results
-        $businesses = $businesses->with(['category', 'reviews'])
+        $businesses = $businesses->with(['reviews'])
             ->withCount('reviews')
             ->withAvg('reviews', 'rating')
             ->paginate(12)
             ->appends($request->except('page'));
+            
+        // Debug the first business
+        if ($businesses->count() > 0) {
+            \Log::info('First business data:', $businesses->first()->toArray());
+        }
         
         // Return the view with the search results
         return view('search.results', [

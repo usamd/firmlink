@@ -224,9 +224,23 @@
                                                 @endif
                                             </div>
                                             
-                                            @if($business->category)
+                                            <!-- Debug: Business Data -->
+                                            <div class="debug-info" style="display: none;">
+                                                <pre>{{ print_r($business->toArray(), true) }}</pre>
+                                            </div>
+                                            
+                                            <!-- Category Display -->
+                                            @php
+                                                $category = $business->getRawOriginal('category') ?? $business->category;
+                                            @endphp
+                                            
+                                            @if(!empty($category))
                                                 <div class="business-category">
-                                                    <i class="fas fa-tag"></i> {{ $business->category }}
+                                                    <i class="fas fa-tag"></i> {{ $category }}
+                                                </div>
+                                            @else
+                                                <div class="business-category text-muted">
+                                                    <i class="fas fa-tag"></i> No category
                                                 </div>
                                             @endif
                                             
@@ -348,8 +362,8 @@
                     <!-- Search Summary (Right Side) -->
                     <div class="col-lg-4">
                         <div class="card h-100">
-                            <div class="card-header bg-light">
-                                <h6 class="mb-0">Search Summary</h6>
+                            <div class="card text-white mb-0" style="background-color:rgb(37, 75, 65);">
+                                <h5 class="mb-2 mt-2">Search Summary</h5>
                             </div>
                             <div class="card-body">
                                 <p class="mb-2"><strong>Location:</strong> {{ $location }}</p>
@@ -382,11 +396,74 @@
                             </div>
                         </div>
                     </div>
+</br>
                 </div>
             </div>
         </div>
     </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <div class="footer-logo">
+                        <img src="{{ asset('assest/Biz.png') }}" alt="BizNest Logo">
+						<span>BizNest</span>
+					</div>
+					<p>Sri Lanka's premier business directory connecting customers with trusted local businesses.</p>
+					<div class="social-links">
+						<a href="#"><i class="fab fa-facebook"></i></a>
+						<a href="#"><i class="fab fa-twitter"></i></a>
+						<a href="#"><i class="fab fa-instagram"></i></a>
+						<a href="#"><i class="fab fa-linkedin"></i></a>
+					</div>
+				</div>
+				
+				<div class="footer-section">
+					<h3>For Businesses</h3>
+					<ul>
+						<li><a href="#">List Your Business</a></li>
+						<li><a href="#">Advertise with Us</a></li>
+						<li><a href="#">Business Dashboard</a></li>
+						<li><a href="#">Pricing Plans</a></li>
+					</ul>
+				</div>
+				
+				<div class="footer-section">
+					<h3>For Users</h3>
+					<ul>
+						<li><a href="#">Browse Businesses</a></li>
+						<li><a href="#">Write Reviews</a></li>
+						<li><a href="#">Mobile App</a></li>
+						<li><a href="#">Help Center</a></li>
+					</ul>
+				</div>
+				
+				<div class="footer-section">
+					<h3>Contact Info</h3>
+					<div class="contact-info">
+						<p><i class="fas fa-map-marker-alt"></i> 123 Business Street, Colombo 03, Sri Lanka</p>
+						<p><i class="fas fa-phone"></i> +94 11 234 5678</p>
+						<p><i class="fas fa-envelope"></i> info@biznest.lk</p>
+					</div>
+				</div>
+			</div>
+			
+			<div class="footer-bottom">
+				<div class="footer-bottom-content">
+					<p>&copy; 2024 BizNest. All rights reserved.</p>
+					<div class="footer-links">
+						<a href="#">Privacy Policy</a>
+						<a href="#">Terms of Service</a>
+						<a href="#">Cookie Policy</a>
+					</div>
+				</div>
+			</div>
+		</div>
+    </footer>
 </div>
+
 
 <style>
     /* ===== Base Styles ===== */
@@ -1178,6 +1255,125 @@
         font-size: 0.9rem;
         margin-left: 5px;
     }
+
+    /* Footer */
+.footer {
+    background: #0f2419;
+    color: white;
+    padding: 60px 0 20px;
+}
+
+.footer-content {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 40px;
+    margin-bottom: 40px;
+}
+
+.footer-logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.footer-logo img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+}
+
+.footer-logo span {
+    font-size: 24px;
+    font-weight: 700;
+}
+
+.footer-section p {
+    margin-bottom: 20px;
+    line-height: 1.6;
+    opacity: 0.9;
+}
+
+.social-links {
+    display: flex;
+    gap: 15px;
+}
+
+.social-links a {
+    width: 40px;
+    height: 40px;
+    background: #2c4a35;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: all 0.3s ease;
+}
+
+.social-links a:hover {
+    background: #1e3932;
+    transform: translateY(-2px);
+}
+
+.footer-section h3 {
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin-bottom: 20px;
+}
+
+.footer-section ul {
+    list-style: none;
+}
+
+.footer-section ul li {
+    margin-bottom: 10px;
+}
+
+.footer-section ul li a {
+    color: #7fb069;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.footer-section ul li a:hover {
+    color: white;
+}
+
+.contact-info p {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+    font-size: 0.9rem;
+}
+
+.footer-bottom {
+    border-top: 1px solid #2c4a35;
+    padding-top: 20px;
+}
+
+.footer-bottom-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.footer-links {
+    display: flex;
+    gap: 20px;
+}
+
+.footer-links a {
+    color: #7fb069;
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: color 0.3s ease;
+}
+
+.footer-links a:hover {
+    color: white;
+}
     
     /* Responsive */
     @media (max-width: 992px) {

@@ -38,7 +38,7 @@ class User extends Authenticatable
      *
      * @var array
      */
-    protected $with = ['role'];
+    protected $with = ['role', 'business'];
 
     /**
      * The attributes that should be hidden for serialization.
@@ -47,6 +47,14 @@ class User extends Authenticatable
         'password',
         'remember_token',
     ];
+
+    /**
+     * Get the business associated with the user.
+     */
+    public function business()
+    {
+        return $this->hasOne(Business::class, 'user_id', 'id');
+    }
 
     /**
      * The attributes that should be cast.
