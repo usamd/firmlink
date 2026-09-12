@@ -14,11 +14,34 @@
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-            background: linear-gradient(135deg, #0a0f0a 0%, #1a2f1a 50%, #0f1f0f 100%);
-            color: white;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: #0a1a1a;
+            color: #e2e8f0;
             overflow-x: hidden;
             position: relative;
+            line-height: 1.5;
+        }
+
+        /* Modern Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #0d2d2d;
+            border-radius: 10px;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #1a4d4d;
+            border-radius: 10px;
+            transition: all 0.2s ease;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: #2d7a7a;
+            box-shadow: 0 0 5px rgba(0, 200, 150, 0.3);
         }
 
 		/* Animated Background Particles */
@@ -90,7 +113,433 @@
 			min-height: 100vh;
 			position: relative;
 			z-index: 1;
+            background: #f8fafc;
+            color: #1e293b;
 		}
+
+        /* Main Content Styles */
+        .main-content {
+            flex: 1;
+            margin-left: 280px;
+            padding: 2rem;
+            transition: all 0.3s ease;
+            background: #0a1a1a;
+        }
+
+        /* Dashboard Header */
+        .dashboard-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid #1a4d4d;
+        }
+
+        .dashboard-header h1 {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #f8fafc;
+            margin: 0;
+        }
+
+        .welcome-text {
+            color: #94a3b8;
+            margin-top: 0.5rem;
+            font-size: 1rem;
+        }
+
+        .gradient-text {
+            background: linear-gradient(90deg, #2d7a7a, #1a4d4d);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-fill-color: transparent;
+        }
+
+        /* Action Buttons */
+        .action-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.625rem 1.25rem;
+            border-radius: 8px;
+            font-weight: 500;
+            font-size: 0.875rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border: none;
+        }
+
+        .action-btn i {
+            font-size: 1rem;
+        }
+
+        .action-btn.primary {
+            background: linear-gradient(135deg, #7c3aed, #6366f1);
+            color: white;
+            box-shadow: 0 4px 6px -1px rgba(124, 58, 237, 0.1), 0 2px 4px -1px rgba(124, 58, 237, 0.06);
+        }
+
+        .action-btn.primary:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 10px 15px -3px rgba(124, 58, 237, 0.1), 0 4px 6px -2px rgba(124, 58, 237, 0.05);
+        }
+
+        .action-btn.secondary {
+            background: white;
+            color: #4f46e5;
+            border: 1px solid #e2e8f0;
+        }
+
+        .action-btn.secondary:hover {
+            background: #f8fafc;
+            border-color: #c7d2fe;
+        }
+
+        /* Stats Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: #0d2d2d;
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.2), 0 2px 4px -1px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            border: 1px solid #1a4d4d;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+
+        .stat-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.25rem;
+            color: white;
+            background: linear-gradient(135deg, #2d7a7a, #1a4d4d);
+        }
+
+        .stat-info h3 {
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: #94a3b8;
+            margin: 0 0 0.25rem;
+        }
+
+        .stat-number {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #f8fafc;
+            margin: 0 0 0.25rem;
+        }
+
+        .stat-change {
+            font-size: 0.75rem;
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+        }
+
+        .stat-change.positive {
+            color: #10b981;
+        }
+
+        .stat-change.negative {
+            color: #ef4444;
+        }
+
+        .view-all {
+            color: #4f46e5;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        /* Dashboard Grid */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        @media (max-width: 1200px) {
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Dashboard Cards */
+        .dashboard-card {
+            background: #0d2d2d;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.2), 0 2px 4px -1px rgba(0, 0, 0, 0.1);
+            margin-bottom: 1.5rem;
+            overflow: hidden;
+            border: 1px solid #1a4d4d;
+        }
+
+        .card-header {
+            padding: 1.25rem 1.5rem;
+            border-bottom: 1px solid #1a4d4d;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(10, 26, 26, 0.7);
+        }
+
+        .card-header h3 {
+            font-size: 1.125rem;
+            font-weight: 600;
+            color: #f8fafc;
+            margin: 0;
+        }
+
+        .card-action {
+            background: none;
+            border: none;
+            color: #4f46e5;
+            font-weight: 500;
+            font-size: 0.875rem;
+            cursor: pointer;
+            padding: 0.25rem 0.5rem;
+            border-radius: 6px;
+        }
+
+        .card-action:hover {
+            background: #f8fafc;
+        }
+
+        /* Quick Actions */
+        .quick-actions {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+            padding: 1.5rem;
+        }
+
+        .quick-action-btn {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 0.75rem;
+            padding: 1.5rem 1rem;
+            background: #0d2d2d;
+            border: 1px dashed #1a4d4d;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .quick-action-btn:hover {
+            background: #1a4d4d;
+            border-color: #2d7a7a;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 100, 80, 0.2);
+        }
+
+        .quick-action-btn i {
+            font-size: 1.5rem;
+            color: #2d7a7a;
+        }
+
+        .quick-action-btn span {
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: #e2e8f0;
+        }
+
+        /* Activity List */
+        .activity-list {
+            padding: 0 1.5rem 1.5rem;
+        }
+
+        .activity-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+            padding: 0.75rem 0;
+            border-bottom: 1px solid #f1f5f9;
+        }
+
+        .activity-item:last-child {
+            border-bottom: none;
+        }
+
+        .activity-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            overflow: hidden;
+            flex-shrink: 0;
+        }
+
+        .activity-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .activity-details {
+            flex: 1;
+        }
+
+        .activity-details p {
+            margin: 0 0 0.25rem;
+            font-size: 0.875rem;
+            color: #e2e8f0;
+        }
+
+        .activity-details small {
+            font-size: 0.75rem;
+            color: #94a3b8;
+        }
+
+        /* Schedule Post */
+        .schedule-post {
+            padding: 1.5rem;
+        }
+
+        .schedule-post textarea {
+            width: 100%;
+            min-height: 100px;
+            padding: 0.75rem 1rem;
+            background: #1e293b;
+            border: 1px solid #334155;
+            border-radius: 8px;
+            font-family: inherit;
+            font-size: 0.9375rem;
+            resize: none;
+            margin-bottom: 1rem;
+            transition: all 0.2s ease;
+            color: #e2e8f0;
+        }
+
+        .schedule-post textarea:focus {
+            outline: none;
+            border-color: #7fb069;
+            box-shadow: 0 0 0 3px rgba(127, 176, 105, 0.2);
+        }
+
+        .post-actions {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .icon-btn {
+            width: 36px;
+            height: 36px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #1e293b;
+            border: 1px solid #334155;
+            color: #94a3b8;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .icon-btn:hover {
+            background: #334155;
+            color: #7fb069;
+            border-color: #7fb069;
+        }
+
+        .post-btn {
+            margin-left: auto;
+            padding: 0.5rem 1.25rem;
+            background: #7fb069;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: 500;
+            font-size: 0.875rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .post-btn:hover {
+            background: #6a9a5a;
+            transform: translateY(-1px);
+        }
+
+        /* Analytics Chart */
+        .analytics-chart {
+            padding: 0 1.5rem 1.5rem;
+            height: 280px;
+        }
+
+        .analytics-period {
+            padding: 0.375rem 0.75rem;
+            border-radius: 6px;
+            border: 1px solid #334155;
+            background: #1e293b;
+            font-size: 0.875rem;
+            color: #e2e8f0;
+            cursor: pointer;
+        }
+
+        .analytics-period:focus {
+            outline: none;
+            border-color: #a5b4fc;
+            box-shadow: 0 0 0 3px rgba(165, 180, 252, 0.2);
+        }
+
+        /* Responsive Adjustments */
+        @media (max-width: 1024px) {
+            .main-content {
+                margin-left: 0;
+                padding: 1rem;
+            }
+
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 640px) {
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .quick-actions {
+                grid-template-columns: 1fr;
+            }
+
+            .dashboard-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1rem;
+            }
+
+            .header-actions {
+                width: 100%;
+                display: flex;
+                gap: 0.75rem;
+            }
+
+            .action-btn {
+                flex: 1;
+                justify-content: center;
+            }
+        }
 
 		/* Modern Redesigned Sidebar */
 		.sidebar {
@@ -3290,7 +3739,161 @@
 		<div class="main-content">
 			<!-- Overview Tab -->
 			<div id="overview" class="tab-content active">
-				<!-- Content Header -->
+				<!-- Dashboard Header -->
+				<div class="dashboard-header">
+					<div class="header-content">
+						<h1>Welcome back, <span class="gradient-text">{{ Auth::user()->name }}</span> 👋</h1>
+						<p class="welcome-text">Here's what's happening with your business today</p>
+					</div>
+					<div class="header-actions">
+						<button class="action-btn primary">
+							<i class="fas fa-plus"></i> New Post
+						</button>
+						<button class="action-btn secondary">
+							<i class="fas fa-chart-line"></i> Analytics
+						</button>
+					</div>
+				</div>
+
+				<!-- Stats Cards -->
+				<div class="stats-grid">
+					<div class="stat-card">
+						<div class="stat-icon">
+							<i class="fas fa-chart-line"></i>
+						</div>
+						<div class="stat-info">
+							<h3>Total Views</h3>
+							<p class="stat-number">1,248</p>
+							<span class="stat-change positive">
+								<i class="fas fa-arrow-up"></i> 12.5% from last week
+							</span>
+						</div>
+					</div>
+
+					<div class="stat-card">
+						<div class="stat-icon">
+							<i class="fas fa-users"></i>
+						</div>
+						<div class="stat-info">
+							<h3>Followers</h3>
+							<p class="stat-number">856</p>
+							<span class="stat-change positive">
+								<i class="fas fa-arrow-up"></i> 24 new this week
+							</span>
+						</div>
+					</div>
+
+					<div class="stat-card">
+						<div class="stat-icon">
+							<i class="fas fa-heart"></i>
+						</div>
+						<div class="stat-info">
+							<h3>Engagement</h3>
+							<p class="stat-number">89%</p>
+							<span class="stat-change positive">
+								<i class="fas fa-arrow-up"></i> 3.2% from last week
+							</span>
+						</div>
+					</div>
+
+					<div class="stat-card">
+						<div class="stat-icon">
+							<i class="fas fa-bell"></i>
+						</div>
+						<div class="stat-info">
+							<h3>Notifications</h3>
+							<p class="stat-number">5</p>
+							<span class="stat-change">
+								<a href="#" class="view-all">View all</a>
+							</span>
+						</div>
+					</div>
+				</div>
+
+				<!-- Main Content Grid -->
+				<div class="dashboard-grid">
+					<!-- Left Column -->
+					<div class="dashboard-column">
+						<!-- Quick Actions -->
+						<div class="dashboard-card">
+							<div class="card-header">
+								<h3>Quick Actions</h3>
+							</div>
+							<div class="quick-actions">
+								<button class="quick-action-btn">
+									<i class="fas fa-edit"></i>
+									<span>Write a Post</span>
+								</button>
+								<button class="quick-action-btn">
+									<i class="fas fa-image"></i>
+									<span>Add Photos</span>
+								</button>
+								<button class="quick-action-btn">
+									<i class="fas fa-video"></i>
+									<span>Go Live</span>
+								</button>
+								<button class="quick-action-btn">
+									<i class="fas fa-calendar-alt"></i>
+									<span>Create Event</span>
+								</button>
+							</div>
+						</div>
+
+						<!-- Recent Activity -->
+						<div class="dashboard-card">
+							<div class="card-header">
+								<h3>Recent Activity</h3>
+								<button class="card-action">See All</button>
+							</div>
+							<div class="activity-list">
+								<div class="activity-item">
+									<div class="activity-avatar">
+										<img src="https://ui-avatars.com/api/?name=John+Doe" alt="User">
+									</div>
+									<div class="activity-details">
+										<p><strong>John Doe</strong> liked your post</p>
+										<small>2 minutes ago</small>
+									</div>
+								</div>
+								<!-- More activity items -->
+							</div>
+						</div>
+					</div>
+
+					<!-- Right Column -->
+					<div class="dashboard-column">
+						<!-- Schedule Post -->
+						<div class="dashboard-card">
+							<div class="card-header">
+								<h3>Schedule a Post</h3>
+							</div>
+							<div class="schedule-post">
+								<textarea placeholder="What's on your mind?"></textarea>
+								<div class="post-actions">
+									<button class="icon-btn"><i class="fas fa-image"></i></button>
+									<button class="icon-btn"><i class="fas fa-video"></i></button>
+									<button class="icon-btn"><i class="fas fa-calendar-alt"></i></button>
+									<button class="post-btn">Post</button>
+								</div>
+							</div>
+						</div>
+
+						<!-- Analytics Overview -->
+						<div class="dashboard-card">
+							<div class="card-header">
+								<h3>Analytics Overview</h3>
+								<select class="analytics-period">
+									<option>Last 7 days</option>
+									<option>Last 30 days</option>
+									<option>This year</option>
+								</select>
+							</div>
+							<div class="analytics-chart">
+								<canvas id="analyticsChart"></canvas>
+							</div>
+						</div>
+					</div>
+				</div>
 				<div class="content-header">
 					<div>
 						<h1>Business Media Hub</h1>

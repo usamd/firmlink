@@ -35,12 +35,14 @@
                 <form action="{{ route('search.businesses') }}" method="GET" class="search-form">
                     <div class="search-input-group">
                         <i class="fas fa-search search-icon"></i>
-                        <input type="text" 
-                               name="query" 
-                               value="{{ request('query') }}" 
-                               placeholder="Search businesses, services..." 
-                               class="search-input"
-                               required>
+                        <select name="category" class="search-input" required>
+                            <option value="">Select a category...</option>
+                            @foreach($categories as $category)
+                                <option value="{{ $category->id }}" {{ request('category') == $category->id ? 'selected' : '' }}>
+                                    {{ $category->name }}
+                                </option>
+                            @endforeach
+                        </select>
                     </div>
                     <div class="search-input-group">
                         <i class="fas fa-map-marker-alt location-icon"></i>
@@ -230,19 +232,9 @@
                                             </div>
                                             
                                             <!-- Category Display -->
-                                            @php
-                                                $category = $business->getRawOriginal('category') ?? $business->category;
-                                            @endphp
-                                            
-                                            @if(!empty($category))
-                                                <div class="business-category">
-                                                    <i class="fas fa-tag"></i> {{ $category }}
-                                                </div>
-                                            @else
-                                                <div class="business-category text-muted">
-                                                    <i class="fas fa-tag"></i> No category
-                                                </div>
-                                            @endif
+                                            <div class="business-category {{ empty($business->category_name) ? 'text-muted' : '' }}">
+                                                <i class="fas fa-tag"></i> {{ $business->category_name ?? 'No category' }}
+                                            </div>
                                             
                                             <div class="business-location">
                                                 <i class="fas fa-map-marker-alt"></i> {{ $business->business_address }}, {{ $business->district }}

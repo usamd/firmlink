@@ -38,7 +38,7 @@ class User extends Authenticatable
      *
      * @var array
      */
-    protected $with = ['role', 'business'];
+    protected $with = ['role'];
 
     /**
      * The attributes that should be hidden for serialization.
